@@ -1,8 +1,11 @@
+const path = require('path')
+
+
 module.exports = {
-  entry: './src/ui/main.js',
+  entry: './src/index.js',
   output: {
-    path: './',
-    filename: "index.js"
+    path: path.resolve(__dirname, './'),
+    filename: "bundle.js"
   },
   devServer: {
     port: 7070,
@@ -13,7 +16,7 @@ module.exports = {
       {
         test: /\.js?$/,
         exclude: /node_modules/,
-        loader: 'babel',
+        loader: 'babel-loader',
         query: {
           presets: ['react', 'es2015', 'stage-0'],
         }

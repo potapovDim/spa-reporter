@@ -1,10 +1,11 @@
 {
   "name": "spa-reporter",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack-dev-server"
   },
   "repository": {
     "type": "git",
@@ -16,7 +17,8 @@
     "url": "https://github.com/potapovDim/spa-reporter/issues"
   },
   "homepage": "https://github.com/potapovDim/spa-reporter#readme",
-  "devDependencies": {
+  "devDependencies": {},
+  "dependencies": {
     "babel": "^6.23.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
@@ -25,12 +27,11 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "babel-register": "^6.26.0",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "react-redux": "^5.0.6",
+    "redux": "^3.7.2",
     "webpack": "^3.8.1",
     "webpack-dev-server": "^2.9.2"
-  },
-  "dependencies": {
-    "react": "^16.0.0",
-    "react-redux": "^5.0.6",
-    "redux": "^3.7.2"
   }
 }
