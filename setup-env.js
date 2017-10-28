@@ -1,22 +1,26 @@
 ":" //; exec /usr/bin/env node --harmony "$0" "$@";
 
-const { spawnSync } = require('child_process');
+const { spawnSync, spawn } = require('child_process');
+const path = require('path');
 
-console.log('!!!!!!', process.argv.slice(2))
+const outputInCurDir = spawnSync('ls', ['./']).output.toString('utf8');
 
-const output = spawnSync('ls',['./'])
-console.log(output.output.toString())
-
-
-
-
-
-
-// const spawnProc = spawn('cp', [
-//   '-r',
-//   process.argv.slice(2)[0],
-//   './'
-// ])
-
-
-// cp - r./SourceFolder./DestFolder
+if (outputInCurDir.includes('spa-report')) {
+  const outputFromResourceDir = spawnSync('ls', [
+    path.resolve(process.cwd(),
+      process.argv.slice(2)[0])])
+    .output
+    .toString('utf8')
+    .replace(/,/g, '')
+    .replace(/\n/g, ' ')
+    .split(' ')
+  outputFromResourceDir.pop()
+  outputFromResourceDir.forEach(subDir => {
+    console.log(path.resolve(process.cwd(), process.argv.slice(2)[0].replace('/spa-report', `/spa-report/${subDir}`)))
+    spawnSync('cp', [
+      '-r',
+      path.resolve(process.cwd(), process.argv.slice(2)[0].replace('/spa-report', `/spa-report/${subDir}`)),
+      path.resolve(process.cwd(), './spa-report')
+    ])
+  })
+}

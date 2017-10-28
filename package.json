@@ -2,7 +2,6 @@
   "name": "spa-reporter",
   "version": "0.0.1",
   "description": "",
-  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack-dev-server"
@@ -11,13 +10,15 @@
     "type": "git",
     "url": "git+https://github.com/potapovDim/spa-reporter.git"
   },
-  "author": "",
+  "author": "Potapov Dmytro",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/potapovDim/spa-reporter/issues"
   },
   "homepage": "https://github.com/potapovDim/spa-reporter#readme",
-  "devDependencies": {},
+  "devDependencies": {
+    "webpack-dev-server": "^2.9.2"
+  },
   "dependencies": {
     "babel": "^6.23.0",
     "babel-cli": "^6.26.0",
@@ -31,7 +32,6 @@
     "react-dom": "^16.0.0",
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
-    "webpack": "^3.8.1",
-    "webpack-dev-server": "^2.9.2"
+    "webpack": "^3.8.1"
   }
 }
