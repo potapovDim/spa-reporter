@@ -16,11 +16,16 @@ if (outputInCurDir.includes('spa-report')) {
     .split(' ')
   outputFromResourceDir.pop()
   outputFromResourceDir.forEach(subDir => {
-    console.log(path.resolve(process.cwd(), process.argv.slice(2)[0].replace('/spa-report', `/spa-report/${subDir}`)))
     spawnSync('cp', [
       '-r',
       path.resolve(process.cwd(), process.argv.slice(2)[0].replace('/spa-report', `/spa-report/${subDir}`)),
       path.resolve(process.cwd(), './spa-report')
     ])
   })
+} else {
+  spawnSync('cp', [
+    '-r',
+    path.resolve(process.cwd(), process.argv.slice(2)[0]),
+    path.resolve(process.cwd(), './')
+  ])
 }
