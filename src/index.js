@@ -1,14 +1,19 @@
 import React, { Component } from 'react';
 import ReactDom from 'react-dom';
 
+import { Menu } from './ui/menu'
+import { Layout } from './ui/layout'
+
 class Page extends Component {
   componentDidMount() {
-
+    
   };
   render() {
     return (
-      <div className="work__area">
-        <div className="scenario__area">Test </div>
+      <div >
+        <Menu />
+        <Layout />
+        <div >Test </div>
       </div>
     );
   };
