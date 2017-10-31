@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
+import { Provider } from 'react-redux'
 import ReactDom from 'react-dom';
+
+import store from './reducers/report'
+
 
 import { Menu } from './ui/menu'
 import { Layout } from './ui/layout'
 
 class Page extends Component {
   componentDidMount() {
-    
+
   };
   render() {
     return (
@@ -19,4 +23,8 @@ class Page extends Component {
   };
 };
 
-ReactDom.render(<Page />, document.getElementById('app'));
+ReactDom.render(
+  <Provider store={store}>
+    <Page />
+  </Provider>
+  , document.getElementById('app'));

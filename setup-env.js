@@ -44,14 +44,14 @@ const dirStructureToDefaultState = () => {
   let jsonStruct = {};
   structDir.forEach((subDir) => {
     jsonStruct[subDir] = require(`./spa-report/${subDir}/test.json`);
-    if(subDir.tests.files) {
-      subDir.tests.files.forEach((file) => {
-        spawn('cp', [
+    // if(subDir.tests.files) {
+    //   subDir.tests.files.forEach((file) => {
+    //     spawn('cp', [
 
-        ])
-      })
-    }
-    element.tests
+    //     ])
+    //   })
+    // }
+    // element.tests
   });
 
   fs.writeFile('./src/reducers/base.json', JSON.stringify(jsonStruct, null, '\t'), (err) => {
