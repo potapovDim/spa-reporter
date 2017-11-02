@@ -1,6 +1,6 @@
 ":" //; exec /usr/bin/env node --harmony "$0" "$@";
 
-const { spawnSync, spawn } = require('child_process');
+const { spawnSync, spawn, execSync } = require('child_process');
 const path = require('path');
 
 const matchFiles = (file, filePath) => {
@@ -26,33 +26,46 @@ const matchFiles = (file, filePath) => {
 }
 
 
+if (process.platform == 'win32') {
+  try {
+    const outputInCurDir = execSync('dir .\\spa-report').toString()
+    console.log(outputInCurDir.replace(/ /g, '').re)
+  } catch (err) {
+    if (err.toString().includes('File Not Found')) {
+      require('child_process').execSync(`md spa-report`)
+      const b = execSync(`xcopy ${process.argv.slice(2)[0]} .\\spa-report /E/C/H/Q/R/K/S`)
+    }
+  }
 
-const outputInCurDir = spawnSync('ls', ['./']).output.toString('utf8');
+} else {
+  const outputInCurDir = spawnSync('ls', ['./']).output.toString('utf8');
 
-if (outputInCurDir.includes('spa-report')) {
-  const outputFromResourceDir = spawnSync('ls', [
-    path.resolve(process.cwd(),
-      process.argv.slice(2)[0])])
-    .output
-    .toString('utf8')
-    .replace(/,/g, '')
-    .replace(/\n/g, ' ')
-    .split(' ')
-  outputFromResourceDir.pop()
-  outputFromResourceDir.forEach(subDir => {
+  if (outputInCurDir.includes('spa-report')) {
+    const outputFromResourceDir = spawnSync('ls', [
+      path.resolve(process.cwd(),
+        process.argv.slice(2)[0])])
+      .output
+      .toString('utf8')
+      .replace(/,/g, '')
+      .replace(/\n/g, ' ')
+      .split(' ')
+    outputFromResourceDir.pop()
+    outputFromResourceDir.forEach(subDir => {
+      spawnSync('cp', [
+        '-r',
+        path.resolve(process.cwd(), process.argv.slice(2)[0].replace('/spa-report', `/spa-report/${subDir}`)),
+        path.resolve(process.cwd(), './spa-report')
+      ])
+    })
+  } else {
     spawnSync('cp', [
       '-r',
-      path.resolve(process.cwd(), process.argv.slice(2)[0].replace('/spa-report', `/spa-report/${subDir}`)),
-      path.resolve(process.cwd(), './spa-report')
+      path.resolve(process.cwd(), process.argv.slice(2)[0]),
+      path.resolve(process.cwd(), './')
     ])
-  })
-} else {
-  spawnSync('cp', [
-    '-r',
-    path.resolve(process.cwd(), process.argv.slice(2)[0]),
-    path.resolve(process.cwd(), './')
-  ])
+  }
 }
+
 
 const dirStructureToDefaultState = () => {
   const fs = require('fs');
@@ -80,10 +93,8 @@ const dirStructureToDefaultState = () => {
     const files = insideDirFiles.filter(file => file !== 'test.json').map(file => matchFiles(file, `./spa-report/${subDir}`))
 
     jsonStruct[subDir].suits.forEach(suit => {
-      console.log('dsakdlasjdlkajsldlas')
       suit.tests.forEach(test => {
         test.files = test.files && test.files.length && test.files.map(fileId => {
-          console.log('dsakdlasjdlkajsldlas')
           let file = null
           files.forEach(file => {
             if (file.id === fileId) {
@@ -98,13 +109,11 @@ const dirStructureToDefaultState = () => {
             files.forEach(file => {
               console.log(file.id, fileId)
               if (file.id === fileId) {
-                console.log('!!!!!!!!!!!!!')
                 fileToReport = file
               }
             })
             return fileToReport
           })
-          console.log(step.files)
         })
       })
     })
