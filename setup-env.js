@@ -1,7 +1,7 @@
-":" //; exec /usr/bin/env node --harmony "$0" "$@";
+":" // exec /usr/bin/env node --harmony "$0" "$@"
 
-const { spawnSync, spawn, execSync } = require('child_process');
-const path = require('path');
+const { spawnSync, spawn, execSync } = require('child_process')
+const path = require('path')
 
 const matchFiles = (file, filePath) => {
   if (file.includes('.json')) {
@@ -38,7 +38,7 @@ if (process.platform == 'win32') {
   }
 
 } else {
-  const outputInCurDir = spawnSync('ls', ['./']).output.toString('utf8');
+  const outputInCurDir = spawnSync('ls', ['./']).output.toString('utf8')
 
   if (outputInCurDir.includes('spa-report')) {
     const outputFromResourceDir = spawnSync('ls', [
@@ -68,17 +68,17 @@ if (process.platform == 'win32') {
 
 
 const dirStructureToDefaultState = () => {
-  const fs = require('fs');
+  const fs = require('fs')
   const structDir = spawnSync('ls', [
     './spa-report'])
     .output
     .toString('utf8')
     .replace(/,/g, '')
     .replace(/\n/g, ' ')
-    .split(' ');
-  structDir.pop();
+    .split(' ')
+  structDir.pop()
 
-  let jsonStruct = {};
+  let jsonStruct = {}
   structDir.forEach((subDir) => {
     const insideDirFiles = spawnSync('ls', [
       `./spa-report/${subDir}`])
@@ -86,9 +86,9 @@ const dirStructureToDefaultState = () => {
       .toString('utf8')
       .replace(/,/g, '')
       .replace(/\n/g, ' ')
-      .split(' ');
-    insideDirFiles.pop();
-    jsonStruct[subDir] = require(`./spa-report/${subDir}/test.json`);
+      .split(' ')
+    insideDirFiles.pop()
+    jsonStruct[subDir] = require(`./spa-report/${subDir}/test.json`)
 
     const files = insideDirFiles.filter(file => file !== 'test.json').map(file => matchFiles(file, `./spa-report/${subDir}`))
 
@@ -117,12 +117,12 @@ const dirStructureToDefaultState = () => {
         })
       })
     })
-  });
+  })
 
 
   fs.writeFile('./src/reducers/base.json', JSON.stringify(jsonStruct, null, '\t'), (err) => {
     if (err) throw err
-  });
+  })
 }
 
 
