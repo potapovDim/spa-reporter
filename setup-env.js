@@ -1,4 +1,4 @@
-":" // exec /usr/bin/env node --harmony "$0" "$@"
+":" //; exec /usr/bin/env node --harmony "$0" "$@";
 
 const { spawnSync, spawn, execSync } = require('child_process')
 const path = require('path')
@@ -17,6 +17,12 @@ const matchFiles = (file, filePath) => {
       content: require('fs').readFileSync(`${filePath}/${file}`).toString('utf8')
     }
   } else {
+    console.log(path.resolve(process.cwd(), `${filePath}/${file}`), path.resolve(process.cwd(), './src/resources'))
+    spawnSync('cp', [
+      '-r',
+      path.resolve(process.cwd(), `${filePath}/${file}`),
+      path.resolve(process.cwd(), './src/resources')
+    ])
     return {
       id: file.split('.')[0],
       type: 'img',
@@ -107,7 +113,6 @@ const dirStructureToDefaultState = () => {
           step.files = step.files && step.files.length && step.files.map(fileId => {
             let fileToReport = null
             files.forEach(file => {
-              console.log(file.id, fileId)
               if (file.id === fileId) {
                 fileToReport = file
               }

@@ -6,19 +6,39 @@ import { Suit } from './suit'
 import { Run } from './run'
 
 class Layout extends Component {
+  state = {
+    allRun: true
+  }
   renderRuns = () => {
-    const { suits } = this.props
-    const keys = _.keys(suits)
-    return keys.map((key, index) => <Run key={index} title={key} content={suits[key]} />)
+    const { suits, runs: { allRuns } } = this.props
+    return allRuns.map((run, index) => <Run key={index} title={run} content={suits[run]} />)
   }
-  componentDidMount() {
-
-  }
-  render() {
+  renderOneRun = () => {
+    const { suits, runs: { allRuns, current } } = this.props
     return (
       <div>
+        {allRuns.map((run, index) => <button key={index}>{run}</button>)}
+        {allRuns.length > 0 && <Run title={current} content={suits[current]} />}
+      </div>
+    )
+  }
+
+
+  handleAllRuns = () => {
+    this.setState({ allRun: true })
+  }
+
+  handleOneRun = () => {
+    this.setState({ allRun: false })
+  }
+  render() {
+    const { allRun } = this.state
+    return (
+      <div>
+        <button onClick={this.handleAllRuns}>Render all runs</button>
+        <button onClick={this.handleOneRun}>Render one run</button>
         <div>Layout </div>
-        {this.renderRuns()}
+        {allRun ? this.renderRuns() : this.renderOneRun()}
       </div>
     )
   }
