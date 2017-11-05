@@ -16,8 +16,15 @@ try {
   }
 }
 
+
+const CHANGE_CURRENT_DATE = 'CHANGE_CURRENT_DATE'
+
+export const changeCurrentDisplayDatt = (date) => ({ type: CHANGE_CURRENT_DATE, date })
+
 const runs = (state = currentInitialState, { type, ...rest }) => {
   switch (type) {
+    case CHANGE_CURRENT_DATE: 
+      return {...state, current: rest.date}
     default:
       return state
   }

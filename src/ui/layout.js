@@ -5,6 +5,8 @@ import { Menu } from './menu'
 import { Suit } from './suit'
 import { Run } from './run'
 
+import { changeCurrentDisplayDatt } from '../reducers/report'
+
 class Layout extends Component {
   state = {
     allRun: true
@@ -14,10 +16,11 @@ class Layout extends Component {
     return allRuns.map((run, index) => <Run key={index} title={run} content={suits[run]} />)
   }
   renderOneRun = () => {
-    const { suits, runs: { allRuns, current } } = this.props
+    const { suits, runs: { allRuns, current }, dispatch } = this.props
+    const changeCurrent = (run) => dispatch(changeCurrentDisplayDatt(run))
     return (
       <div>
-        {allRuns.map((run, index) => <button key={index}>{run}</button>)}
+        {allRuns.map((run, index) => <button onClick={() => changeCurrent(run)} key={index}>{run}</button>)}
         {allRuns.length > 0 && <Run title={current} content={suits[current]} />}
       </div>
     )
