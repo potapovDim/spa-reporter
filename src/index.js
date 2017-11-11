@@ -15,7 +15,6 @@ class Page extends Component {
       <div >
         <Menu />
         <Layout />
-        <div >Test </div>
       </div>
     )
   }

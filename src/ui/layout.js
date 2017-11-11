@@ -31,7 +31,6 @@ class Layout extends Component {
     )
   }
 
-
   handleAllRuns = () => {
     this.setState({ allRun: true })
   }
