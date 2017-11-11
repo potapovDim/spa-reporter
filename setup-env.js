@@ -32,45 +32,45 @@ const matchFiles = (file, filePath) => {
 }
 
 
-if (process.platform == 'win32') {
-  try {
-    const outputInCurDir = execSync('dir .\\spa-report').toString()
-    console.log(outputInCurDir.replace(/ /g, '').re)
-  } catch (err) {
-    if (err.toString().includes('File Not Found')) {
-      require('child_process').execSync(`md spa-report`)
-      const b = execSync(`xcopy ${process.argv.slice(2)[0]} .\\spa-report /E/C/H/Q/R/K/S`)
-    }
-  }
+// if (process.platform == 'win32') {
+//   try {
+//     const outputInCurDir = execSync('dir .\\spa-report').toString()
+//     console.log(outputInCurDir.replace(/ /g, '').re)
+//   } catch (err) {
+//     if (err.toString().includes('File Not Found')) {
+//       require('child_process').execSync(`md spa-report`)
+//       const b = execSync(`xcopy ${process.argv.slice(2)[0]} .\\spa-report /E/C/H/Q/R/K/S`)
+//     }
+//   }
 
-} else {
-  const outputInCurDir = spawnSync('ls', ['./']).output.toString('utf8')
+// } else {
+//   const outputInCurDir = spawnSync('ls', ['./']).output.toString('utf8')
 
-  if (outputInCurDir.includes('spa-report')) {
-    const outputFromResourceDir = spawnSync('ls', [
-      path.resolve(process.cwd(),
-        process.argv.slice(2)[0])])
-      .output
-      .toString('utf8')
-      .replace(/,/g, '')
-      .replace(/\n/g, ' ')
-      .split(' ')
-    outputFromResourceDir.pop()
-    outputFromResourceDir.forEach(subDir => {
-      spawnSync('cp', [
-        '-r',
-        path.resolve(process.cwd(), process.argv.slice(2)[0].replace('/spa-report', `/spa-report/${subDir}`)),
-        path.resolve(process.cwd(), './spa-report')
-      ])
-    })
-  } else {
-    spawnSync('cp', [
-      '-r',
-      path.resolve(process.cwd(), process.argv.slice(2)[0]),
-      path.resolve(process.cwd(), './')
-    ])
-  }
-}
+//   if (outputInCurDir.includes('spa-report')) {
+//     const outputFromResourceDir = spawnSync('ls', [
+//       path.resolve(process.cwd(),
+//         process.argv.slice(2)[0])])
+//       .output
+//       .toString('utf8')
+//       .replace(/,/g, '')
+//       .replace(/\n/g, ' ')
+//       .split(' ')
+//     outputFromResourceDir.pop()
+//     outputFromResourceDir.forEach(subDir => {
+//       spawnSync('cp', [
+//         '-r',
+//         path.resolve(process.cwd(), process.argv.slice(2)[0].replace('/spa-report', `/spa-report/${subDir}`)),
+//         path.resolve(process.cwd(), './spa-report')
+//       ])
+//     })
+//   } else {
+//     spawnSync('cp', [
+//       '-r',
+//       path.resolve(process.cwd(), process.argv.slice(2)[0]),
+//       path.resolve(process.cwd(), './')
+//     ])
+//   }
+// }
 
 
 const dirStructureToDefaultState = () => {

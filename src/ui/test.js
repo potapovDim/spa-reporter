@@ -13,7 +13,7 @@ export class Test extends Component {
   render() {
     const { title } = this.props
     return (
-      <div>
+      <div className="suit__content">
         <div>Test: {title}</div>
         {this.renderSteps()}
       </div>

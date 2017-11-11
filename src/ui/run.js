@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import _ from 'lodash'
 
 import {Suit} from './suit'
+import './style.scss'
 
 export class Run extends Component {
   renderSuits = () => {
@@ -12,8 +13,8 @@ export class Run extends Component {
   render() {
     const { title } = this.props
     return (
-      <div>
-        <div>Run: {title}</div>
+      <div className="item">
+        <div className="item__date">Run: <time dateTime={title}>{title}</time></div>
         {this.renderSuits()}
       </div>
     )
