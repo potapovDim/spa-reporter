@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import _ from 'lodash'
-import { Menu } from './menu'
 import { Suit } from './suit'
 import { Run } from './run'
+import _ from 'lodash'
 
 import { changeCurrentDisplayDatt } from '../reducers/report'
 
@@ -22,7 +21,7 @@ class Layout extends Component {
     )
   }
   renderDateControls = () => {
-    const { runs: { allRuns }, dispatch} = this.props
+    const { runs: { allRuns }, dispatch } = this.props
     const changeCurrent = (run) => dispatch(changeCurrentDisplayDatt(run))
     return (
       <div className="date-controls">
@@ -38,6 +37,7 @@ class Layout extends Component {
   handleOneRun = () => {
     this.setState({ allRun: false })
   }
+  
   render() {
     const { allRun } = this.state
     return (

@@ -5,16 +5,15 @@ import ReactDom from 'react-dom'
 import store from './reducers/report'
 
 
-import { Menu } from './ui/menu'
+import Menu from './ui/menu'
 import Layout from './ui/layout'
 
 class Page extends Component {
   render() {
-    console.log(this.props)
     return (
-      <div >
-        <Menu />
+      <div>
         <Layout />
+        <Menu />
       </div>
     )
   }
@@ -23,5 +22,4 @@ class Page extends Component {
 ReactDom.render(
   <Provider store={store}>
     <Page />
-  </Provider>
-  , document.getElementById('app'))
+  </Provider>, document.getElementById('app'))
