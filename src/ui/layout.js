@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import _ from 'lodash'
+import { Chart } from './charts'
 import { Suit } from './suit'
 import { Run } from './run'
-import _ from 'lodash'
+
 
 import { changeCurrentDisplayDatt } from '../reducers/report'
 
@@ -10,22 +12,28 @@ class Layout extends Component {
   state = {
     allRun: true
   }
+
   renderRuns = () => {
     const { suits, runs: { allRuns } } = this.props
     return allRuns.map((run, index) => <Run key={index} title={run} content={suits[run]} />)
   }
+
   renderOneRun = () => {
     const { suits, runs: { allRuns, current }, dispatch } = this.props
     return (
       <Run title={current} content={suits[current]} />
     )
   }
+
   renderDateControls = () => {
     const { runs: { allRuns }, dispatch } = this.props
     const changeCurrent = (run) => dispatch(changeCurrentDisplayDatt(run))
     return (
       <div className="date-controls">
-        {allRuns.map((run, index) => <button className="date-controls__item" onClick={() => changeCurrent(run)} key={index}>{run}</button>)}
+        {allRuns.map((run, index) =>
+          <button className="date-controls__item"
+            onClick={() => changeCurrent(run)}
+            key={index}>{run}</button>)}
       </div>
     )
   }
@@ -37,7 +45,7 @@ class Layout extends Component {
   handleOneRun = () => {
     this.setState({ allRun: false })
   }
-  
+
   render() {
     const { allRun } = this.state
     return (
@@ -51,6 +59,7 @@ class Layout extends Component {
         <section className="items-wrapper">
           {allRun ? this.renderRuns() : this.renderOneRun()}
         </section>
+        <Chart />
       </div>
     )
   }

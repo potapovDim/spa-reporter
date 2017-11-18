@@ -12,7 +12,6 @@ try {
         current: keys[keys.length - 1]
     }
     failedTests = Object.keys(scopeState).reduce((obj, value, index) => {
-        console.log(obj, value)
         return {
             ...obj, [value]: {
                 ...scopeState[value], suits: scopeState[value].suits.map((suit) => {
@@ -22,7 +21,6 @@ try {
         }
     }, {})
     successTests = Object.keys(scopeState).reduce((obj, value, index) => {
-        console.log(obj, value)
         return {
             ...obj, [value]: {
                 ...scopeState[value], suits: scopeState[value].suits.map((suit) => {
