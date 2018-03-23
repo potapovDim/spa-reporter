@@ -11,10 +11,12 @@ export class Test extends Component {
     return files.length && files.map((file, index) => <File key={index} file={file} />)
   }
   render() {
-    const { title } = this.props
+    const { title, duration } = this.props
+    console.log(duration)
     return (
       <div className="suit__content">
         <div>Test: {title}</div>
+        <div>Duration: {duration}</div>
         {this.renderSteps()}
       </div>
     )

@@ -31,11 +31,9 @@ const matchFiles = (file, filePath) => {
   }
 }
 
-
 if (process.platform == 'win32') {
   try {
     const outputInCurDir = execSync('dir .\\spa-report').toString()
-    console.log(outputInCurDir.replace(/ /g, '').re)
   } catch (err) {
     if (err.toString().includes('File Not Found')) {
       require('child_process').execSync(`md spa-report`)
@@ -124,13 +122,9 @@ const dirStructureToDefaultState = () => {
     })
   })
 
-
   fs.writeFile('./src/reducers/base.json', JSON.stringify(jsonStruct, null, '\t'), (err) => {
     if (err) throw err
   })
 }
-
-
-
 
 dirStructureToDefaultState()

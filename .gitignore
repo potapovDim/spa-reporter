@@ -6,3 +6,4 @@ package-lock.json
 spa-report
 src/resources/*.*
 src/reducers/base.json
+dist

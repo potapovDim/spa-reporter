@@ -23,7 +23,7 @@ export function mapDispatchToProps(dispatch) {
     failedTest: () => dispatch(showOnlyFailedRuns()),
     successTest: () => dispatch(showOnlySuccessRuns()),
     allRuns: () => dispatch(showAllRuns())
-  };
+  }
 }
 
 export default connect(

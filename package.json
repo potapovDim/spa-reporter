@@ -61,5 +61,8 @@
     "webpack": "^2.6.1",
     "webpack-dev-server": "^2.4.5",
     "webpack-svgstore-plugin": "^4.0.0"
+  },
+  "devDependencies": {
+    "json-loader": "^0.5.7"
   }
 }

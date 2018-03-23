@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
 
-import {Suit} from './suit'
+import { Suit } from './suit'
 import './style.scss'
 
 export class Run extends Component {
   renderSuits = () => {
     const { content: { suits } } = this.props
-    return suits.map((suit, index) => <Suit key={index} {...suit}/>)
+    return suits.map((suit, index) => <Suit key={index} {...suit} />)
   }
 
   render() {
