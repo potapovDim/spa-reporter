@@ -2,7 +2,8 @@ let scopeState
 let runsStates
 let failedTests
 let successTests
-const { pick, mapValues } = require('lodash')
+
+const {pick, mapValues} = require('lodash')
 
 try {
     scopeState = require('./base.json')
@@ -15,7 +16,7 @@ try {
         return {
             ...obj, [value]: {
                 ...scopeState[value], suits: scopeState[value].suits.map((suit) => {
-                    return { ...suit, tests: suit.tests.filter((test) => test.state === 'failed') }
+                    return {...suit, tests: suit.tests.filter((test) => test.state === 'failed')}
                 }).filter(suit => suit.tests.length)
             }
         }
@@ -24,12 +25,12 @@ try {
         return {
             ...obj, [value]: {
                 ...scopeState[value], suits: scopeState[value].suits.map((suit) => {
-                    return { ...suit, tests: suit.tests.filter((test) => test.state === 'passed') }
+                    return {...suit, tests: suit.tests.filter((test) => test.state === 'passed')}
                 }).filter(suit => suit.tests.length)
             }
         }
     }, {})
-} catch (error) {
+} catch(error) {
     scopeState = {}
     runsStates = {
         allRuns: [],

@@ -3,7 +3,8 @@ node_modules/
 .vscode
 .DS_Store
 package-lock.json
-spa-report
+reporter
 src/resources/*.*
 src/reducers/base.json
 dist
+rep

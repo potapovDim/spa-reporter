@@ -1,130 +1,79 @@
 ":" //; exec /usr/bin/env node --harmony "$0" "$@";
 
-const { spawnSync, spawn, execSync } = require('child_process')
+const copyDir = require('copy-dir')
 const path = require('path')
+const argv = require('minimist')(process.argv.slice(2))
+const fs = require('fs')
+const reportDir = path.resolve(__dirname, './reporter')
 
-const matchFiles = (file, filePath) => {
-  if (file.includes('.json')) {
-    return {
-      id: file.split('.')[0],
-      type: 'json',
-      content: require(`${filePath}/${file}`)
+copyDir.sync(path.resolve(process.cwd(), argv.report), reportDir)
+
+const walkSync = function(dir, filelist = []) {
+  const files = fs.readdirSync(dir)
+  files.forEach(function(file) {
+    if(fs.statSync(path.join(dir, file)).isDirectory()) {
+      filelist = walkSync(path.join(dir, file), filelist)
     }
-  } else if (file.includes('.txt')) {
-    return {
-      id: file.split('.')[0],
-      type: 'text',
-      content: require('fs').readFileSync(`${filePath}/${file}`).toString('utf8')
-    }
-  } else {
-    spawnSync('mkdir', [path.resolve(process.cwd(), `${filePath}/${file}`), path.resolve(process.cwd(), './src/resources')])
-    spawnSync('cp', [
-      '-r',
-      path.resolve(process.cwd(), `${filePath}/${file}`),
-      path.resolve(process.cwd(), './src/resources')
-    ])
-    return {
-      id: file.split('.')[0],
-      type: 'img',
-      content: file
-    }
-  }
+    else {filelist.push(path.join(dir, file))}
+  })
+  return filelist
 }
 
-if (process.platform == 'win32') {
-  try {
-    const outputInCurDir = execSync('dir .\\spa-report').toString()
-  } catch (err) {
-    if (err.toString().includes('File Not Found')) {
-      require('child_process').execSync(`md spa-report`)
-      const b = execSync(`xcopy ${process.argv.slice(2)[0]} .\\spa-report /E/C/H/Q/R/K/S`)
-    }
-  }
+const files = walkSync(reportDir)
+const suitsFiles = files.filter(function(file) {
+  return file.includes('-suit.json')
+})
 
-} else {
-  const outputInCurDir = spawnSync('ls', ['./']).output.toString('utf8')
+const testStackIncludes = ['failed', 'broken']
 
-  if (outputInCurDir.includes('spa-report')) {
-    const outputFromResourceDir = spawnSync('ls', [
-      path.resolve(process.cwd(),
-        process.argv.slice(2)[0])])
-      .output
-      .toString('utf8')
-      .replace(/,/g, '')
-      .replace(/\n/g, ' ')
-      .split(' ')
-    outputFromResourceDir.pop()
-    outputFromResourceDir.forEach(subDir => {
-      spawnSync('cp', [
-        '-r',
-        path.resolve(process.cwd(), process.argv.slice(2)[0].replace('/spa-report', `/spa-report/${subDir}`)),
-        path.resolve(process.cwd(), './spa-report')
-      ])
-    })
-  } else {
-    spawnSync('cp', [
-      '-r',
-      path.resolve(process.cwd(), process.argv.slice(2)[0]),
-      path.resolve(process.cwd(), './')
-    ])
-  }
-}
+function getSuitToData(suitData, file) {
+  const dir = path.dirname(file)
+  const title = suitData.title
+  const status = suitData.status
+  const tests = suitData.tests.map(function(test) {
+    const title = test.title
+    const start = test.timeStart
+    const end = test.timeEnd
+    const state = test.state
+    const duration = test.duration
+    if(testStackIncludes.includes(state)) {const errorStack = test.errorStack.stack}
 
-
-const dirStructureToDefaultState = () => {
-  const fs = require('fs')
-  const structDir = spawnSync('ls', [
-    './spa-report'])
-    .output
-    .toString('utf8')
-    .replace(/,/g, '')
-    .replace(/\n/g, ' ')
-    .split(' ')
-  structDir.pop()
-
-  let jsonStruct = {}
-  structDir.forEach((subDir) => {
-    const insideDirFiles = spawnSync('ls', [
-      `./spa-report/${subDir}`])
-      .output
-      .toString('utf8')
-      .replace(/,/g, '')
-      .replace(/\n/g, ' ')
-      .split(' ')
-    insideDirFiles.pop()
-    jsonStruct[subDir] = require(`./spa-report/${subDir}/test.json`)
-
-    const files = insideDirFiles.filter(file => file !== 'test.json').map(file => matchFiles(file, `./spa-report/${subDir}`))
-
-    jsonStruct[subDir].suits.forEach(suit => {
-      suit.tests.forEach(test => {
-        test.files = test.files && test.files.length && test.files.map(fileId => {
-          let file = null
-          files.forEach(file => {
-            if (file.id === fileId) {
-              file = file
-            }
-          })
-          return file
-        })
-        test.steps.forEach(step => {
-          step.files = step.files && step.files.length && step.files.map(fileId => {
-            let fileToReport = null
-            files.forEach(file => {
-              if (file.id === fileId) {
-                fileToReport = file
-              }
-            })
-            return fileToReport
-          })
-        })
+    const steps = test.steps.map(function(step) {
+      const title = step.title
+      const attachments = step.files.map(function(file) {
+        const ext = path.extname(path.resolve(dir, file))
+        if(ext === '.png') {
+          return {img: path.resolve(dir, file)}
+        } else if(ext === '.json') {
+          return {json: require(path.resolve(dir, file))}
+        } else {
+          const text = fs.readFileSync(path.resolve(dir, file)).toString('utf8')
+          return {text}
+        }
       })
+      return {title, attachments}
     })
+    return {title, start, end, duration, steps}
   })
-
-  fs.writeFile('./src/reducers/base.json', JSON.stringify(jsonStruct, null, '\t'), (err) => {
-    if (err) throw err
-  })
+  return {title, status, tests}
 }
 
-dirStructureToDefaultState()
+
+const data = suitsFiles.map(function(file) {
+  const lastDir = path.dirname(file).split('/')
+  const JSON_DATA = require(file)
+  const stats = JSON_DATA.stats
+  const suits = JSON_DATA.suits.map(function(suit) {
+    return getSuitToData(suit, file)
+  })
+  return {stats, suits, dirDate: lastDir[lastDir.length - 1]}
+})
+
+function putBaseFile() {
+  if(fs.existsSync(path.resolve(__dirname, './src/reducers/base.json'))) {
+    fs.unlinkSync(path.resolve(__dirname, './src/reducers/base.json'))
+  }
+  fs.writeFileSync(path.resolve(__dirname, './src/reducers/base.json'), JSON.stringify(data))
+}
+
+putBaseFile()

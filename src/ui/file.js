@@ -1,19 +1,17 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 
 export class File extends Component {
   renderFile = () => {
-    const { file } = this.props
-    switch (file.type) {
-      case 'json':
-        return <div>{JSON.stringify(file.content, null, '\t')}</div>
-      case 'text':
-        return <div>{file.content}</div>
-      case 'img':
-        return <img src={`./src/resources/${file.content}`} />
+    const {file} = this.props
+    const fileMerge = {
+      img: (imgSrc) => <img src={imgSrc} />,
+      text: (textContent) => <div>{textContent}</div>,
+      json: (jsonContent) => <div>{JSON.stringify(jsonContent, null, '\t')}</div>
     }
+    return fileMerge[Object.keys(file)[0]](file[Object.keys(file)[0]])
   }
   render() {
-    const { file } = this.props
+    const {file} = this.props
     return (
       <div>
         <div>AttachmentData:  {file.id}</div>
