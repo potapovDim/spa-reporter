@@ -1,24 +1,21 @@
-import React, { Component } from 'react'
-import { Step } from './step'
+import React, {Component} from 'react'
+import {Step} from './step'
 
 export class Test extends Component {
   renderSteps = () => {
-    const { steps } = this.props
+    const {steps} = this.props
     return steps.map((step, index) => <Step key={index} {...step} />)
   }
-  renderFiles = () => {
-    const { files } = this.props
-    return files.length && files.map((file, index) => <File key={index} file={file} />)
-  }
   render() {
-    const { title, duration } = this.props
-    console.log(duration)
+    const {title, start, end, duration} = this.props
     return (
       <div className="suit__content">
         <div>Test: {title}</div>
+        <div>Start: {start} </div>
         <div>Duration: {duration}</div>
+        <div>End: {end} </div>
         {this.renderSteps()}
-      </div>
+      </div >
     )
   }
 }

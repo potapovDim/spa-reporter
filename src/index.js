@@ -12,7 +12,6 @@ class Page extends Component {
     return (
       <div>
         <Layout />
-        <Menu />
       </div>
     )
   }
