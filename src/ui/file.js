@@ -14,7 +14,7 @@ export class File extends Component {
     const {file} = this.props
     return (
       <div>
-        <div>AttachmentData:  {file.id}</div>
+        <div>AttachmentData</div>
         {this.renderFile()}
       </div>
     )
