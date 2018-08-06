@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha $(find ./specs/ -path '*.spec.*') --compilers js:babel-core/register --require ignore-styles --require ./specs/setup.js",
     "dev": "webpack-dev-server --open --inline",
     "build": "webpack --progress"
   },
