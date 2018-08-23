@@ -1,12 +1,14 @@
-":" //; exec /usr/bin/env node --harmony "$0" "$@";
+":" //; exec /usr/bin/env node
 
 const copyDir = require('copy-dir')
 const path = require('path')
-const argv = require('minimist')(process.argv.slice(2))
 const fs = require('fs')
 const reportDir = path.resolve(__dirname, './reporter')
 
-copyDir.sync(path.resolve(process.cwd(), argv.report), reportDir)
+
+function executeCopyDir(reportPath) {
+  copyDir.sync(path.resolve(process.cwd(), reportPath), reportDir)
+}
 
 const walkSync = function(dir, filelist = []) {
   const files = fs.readdirSync(dir)
@@ -19,10 +21,11 @@ const walkSync = function(dir, filelist = []) {
   return filelist
 }
 
-const files = walkSync(reportDir)
-const suitsFiles = files.filter(function(file) {
-  return file.includes('-suit.json')
-})
+function getSuitFiles() {
+  return walkSync(reportDir).filter(function(file) {
+    return file.includes('-suit.json')
+  })
+}
 
 const testStackIncludes = ['failed', 'broken']
 
@@ -58,22 +61,23 @@ function getSuitToData(suitData, file) {
   return {title, status, tests}
 }
 
-
-const data = suitsFiles.map(function(file) {
-  const lastDir = path.dirname(file).split('/')
-  const JSON_DATA = require(file)
-  const stats = JSON_DATA.stats
-  const suits = JSON_DATA.suits.map(function(suit) {
-    return getSuitToData(suit, file)
-  })
-  return {stats, suits, dirDate: lastDir[lastDir.length - 1]}
-})
-
 function putBaseFile() {
+  const data = getSuitFiles().map(function(file) {
+    const lastDir = path.dirname(file).split('/')
+    const JSON_DATA = require(file)
+    const stats = JSON_DATA.stats
+    const suits = JSON_DATA.suits.map(function(suit) {
+      return getSuitToData(suit, file)
+    })
+    return {stats, suits, dirDate: lastDir[lastDir.length - 1]}
+  })
   if(fs.existsSync(path.resolve(__dirname, './src/reducers/base.json'))) {
     fs.unlinkSync(path.resolve(__dirname, './src/reducers/base.json'))
   }
   fs.writeFileSync(path.resolve(__dirname, './src/reducers/base.json'), JSON.stringify(data))
 }
 
-putBaseFile()
+module.exports = {
+  putBaseFile,
+  executeCopyDir
+}

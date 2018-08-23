@@ -7,6 +7,9 @@
     "dev": "webpack-dev-server --open --inline",
     "build": "webpack --progress"
   },
+  "bin": {
+    "spa-reporter": "./bin/spa_report"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/potapovDim/spa-reporter.git"
