@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {Provider} from 'react-redux'
 import ReactDom from 'react-dom'
 
-import store from './reducers/report'
+import store from './reducers'
 
 import Menu from './ui/menu'
 import Layout from './ui/layout'

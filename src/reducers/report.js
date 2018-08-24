@@ -1,4 +1,4 @@
-import {combineReducers, createStore} from 'redux'
+
 import {scopeState} from './states'
 
 const CHANGE_CURRENT_DATE = 'CHANGE_CURRENT_DATE'
@@ -11,13 +11,9 @@ export const showAllRuns = () => ({type: SHOW_ALL_RUNS})
 export const showOnlySuccessRuns = () => ({type: SHOW_SUCCESS_RUNS})
 export const showOnlyFailedRuns = () => ({type: SHOW_FAILED_RUNS})
 
-const runs = (state = scopeState, {type, ...rest}) => {
+export const runs = (state = scopeState, {type, ...rest}) => {
   switch(type) {
     default:
       return state
   }
 }
-
-export default createStore(combineReducers({
-  runs
-}))
