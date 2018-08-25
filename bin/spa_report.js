@@ -4,6 +4,8 @@ const {putBaseFile, executeCopyDir} = require('../setup-env')
 const argv = require('minimist')(process.argv.slice(2))
 const {exec} = require('child_process')
 
+console.log(argv)
+
 if(argv.server) {
   executeCopyDir(argv.report)
   putBaseFile()
@@ -15,9 +17,9 @@ if(argv.server) {
 } else if(argv.build) {
   executeCopyDir(argv.report)
   putBaseFile()
-  const proc = exec(`
-    cd ../ && npm run build
-  `)
-  proc.on('error', console.error)
-  proc.stderr.on('data', console.error)
+  // const proc = exec(`
+  //   cd ../ && npm run build
+  // `)
+  // proc.on('error', console.error)
+  // proc.stderr.on('data', console.error)
 }

@@ -5,7 +5,6 @@ const path = require('path')
 const fs = require('fs')
 const reportDir = path.resolve(__dirname, './reporter')
 
-
 function executeCopyDir(reportPath) {
   copyDir.sync(path.resolve(process.cwd(), reportPath), reportDir)
 }
@@ -33,14 +32,15 @@ function getSuitToData(suitData, file) {
   const dir = path.dirname(file)
   const title = suitData.title
   const status = suitData.status
+
   const tests = suitData.tests.map(function(test) {
     const title = test.title
     const start = test.timeStart
     const end = test.timeEnd
     const state = test.state
     const duration = test.duration
-    if(testStackIncludes.includes(state)) {const errorStack = test.errorStack.stack}
 
+    if(testStackIncludes.includes(state)) {return {errorStack: test.errorStack.stack}}
     const steps = test.steps.map(function(step) {
       const title = step.title
       const attachments = step.files.map(function(file) {
@@ -66,10 +66,12 @@ function putBaseFile() {
     const lastDir = path.dirname(file).split('/')
     const JSON_DATA = require(file)
     const stats = JSON_DATA.stats
+    const browser = JSON_DATA.browser
+    const opts = JSON_DATA.opts
     const suits = JSON_DATA.suits.map(function(suit) {
       return getSuitToData(suit, file)
     })
-    return {stats, suits, dirDate: lastDir[lastDir.length - 1]}
+    return {stats, suits, browser, opts, dirDate: lastDir[lastDir.length - 1]}
   })
   if(fs.existsSync(path.resolve(__dirname, './src/reducers/base.json'))) {
     fs.unlinkSync(path.resolve(__dirname, './src/reducers/base.json'))
