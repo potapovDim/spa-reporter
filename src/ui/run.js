@@ -12,6 +12,7 @@ export class Run extends Component {
 
   render() {
     const {title} = this.props
+    console.log(title)
     return (
       <div className="item">
         <div className="item__date">Run: <time dateTime={title}>{title}</time></div>

@@ -11,6 +11,7 @@ class Page extends Component {
   render() {
     return (
       <div>
+        <Menu />
         <Layout />
       </div>
     )

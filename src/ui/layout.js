@@ -11,10 +11,16 @@ class Layout extends Component {
   state = {
     allRun: true
   }
+
   renderRun = () => {
     const {runs} = this.props
     return runs.map((run, index) => <Run key={index} {...run} />)
   }
+
+  // shouldComponentUpdate(nextProps) {
+  //   if(nextProps.runs.length !== this.props.runs.length) {return true}
+  //   return false
+  // }
 
   handleAllRuns = () => {
     this.setState({allRun: true})

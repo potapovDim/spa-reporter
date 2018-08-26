@@ -70,6 +70,8 @@ function putBaseFile() {
     const JSON_DATA = require(file)
     const stats = JSON_DATA.stats
     const opts = JSON_DATA.opts
+    const title = JSON.title
+
     const suits = JSON_DATA.suits.map(function(suit) {
       return getSuitToData(suit, file)
     })
