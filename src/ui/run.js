@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import _ from 'lodash'
 
 import {Suit} from './suit'
-import './style.scss'
+import './style/style.scss'
 
 export class Run extends Component {
   renderSuits = () => {

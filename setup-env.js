@@ -32,15 +32,16 @@ function getSuitToData(suitData, file) {
   const dir = path.dirname(file)
   const title = suitData.title
   const status = suitData.status
+  const browser = suitData.browser
 
   const tests = suitData.tests.map(function(test) {
     const title = test.title
     const start = test.timeStart
     const end = test.timeEnd
     const state = test.state
+
     const duration = test.duration
 
-    if(testStackIncludes.includes(state)) {return {errorStack: test.errorStack.stack}}
     const steps = test.steps.map(function(step) {
       const title = step.title
       const attachments = step.files.map(function(file) {
@@ -56,9 +57,11 @@ function getSuitToData(suitData, file) {
       })
       return {title, attachments}
     })
-    return {title, start, end, duration, steps}
+    const result = {title, start, state, end, duration, steps, errorStack: testStackIncludes.includes(state) ? test.errorStack.stack : undefined}
+
+    return result
   })
-  return {title, status, tests}
+  return {title, status, tests, browser}
 }
 
 function putBaseFile() {
@@ -66,12 +69,11 @@ function putBaseFile() {
     const lastDir = path.dirname(file).split('/')
     const JSON_DATA = require(file)
     const stats = JSON_DATA.stats
-    const browser = JSON_DATA.browser
     const opts = JSON_DATA.opts
     const suits = JSON_DATA.suits.map(function(suit) {
       return getSuitToData(suit, file)
     })
-    return {stats, suits, browser, opts, dirDate: lastDir[lastDir.length - 1]}
+    return {stats, suits, opts, dirDate: lastDir[lastDir.length - 1]}
   })
   if(fs.existsSync(path.resolve(__dirname, './src/reducers/base.json'))) {
     fs.unlinkSync(path.resolve(__dirname, './src/reducers/base.json'))
