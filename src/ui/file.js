@@ -11,7 +11,6 @@ export class File extends Component {
     return fileMerge[Object.keys(file)[0]](file[Object.keys(file)[0]])
   }
   render() {
-    const {file} = this.props
     return (
       <div>
         <div>AttachmentData</div>
