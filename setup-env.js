@@ -9,6 +9,7 @@ function executeCopyDir(reportPath) {
   copyDir.sync(path.resolve(process.cwd(), reportPath), reportDir)
 }
 
+// fs.createReadStream('./package-lock.json').pipe(fs.createWriteStream('./src/images/newfile.json'));
 const walkSync = function(dir, filelist = []) {
   const files = fs.readdirSync(dir)
   files.forEach(function(file) {
@@ -47,7 +48,8 @@ function getSuitToData(suitData, file) {
       const attachments = step.files.map(function(file) {
         const ext = path.extname(path.resolve(dir, file))
         if(ext === '.png') {
-          return {img: path.resolve(dir, file)}
+          fs.createReadStream(path.resolve(dir, file)).pipe(fs.createWriteStream(path.resolve(__dirname, `./src/images/${file}`)))
+          return {img: `/images/${file}`}
         } else if(ext === '.json') {
           return {json: require(path.resolve(dir, file))}
         } else {
