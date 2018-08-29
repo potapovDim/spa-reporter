@@ -19,4 +19,11 @@ describe('Step', () => {
     wrapper.find('div').at(1).simulate('click')
     expect(wrapper.state()).to.eql({showAttachments: true})
   })
+  it('html', () => {
+    const props = {attachments: [{img: 'test'}], title: 'test'}
+    const wrapper = mount(<Step {...props} />)
+
+    expect(wrapper.html()).to.eql(`<div><div><!-- react-text: 3 -->Step:<!-- /react-text --><!-- react-text: 4 -->${props.title}<!-- /react-text --></div></div>`)
+    wrapper.find('div').at(1).simulate('click')
+  })
 })
