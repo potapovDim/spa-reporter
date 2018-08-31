@@ -1,11 +1,8 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import _ from 'lodash'
-import {Chart} from './charts'
-import {Suit} from './suit'
 import {Run} from './run'
-
-import {changeCurrentDisplayDatt} from '../reducers/report'
+import {chartTransfer} from '../ui-control/rx_ui_control'
 
 class Layout extends Component {
   state = {
@@ -13,18 +10,14 @@ class Layout extends Component {
   }
 
   renderRun = () => {
-    console.log(this.props)
     const {runs} = this.props
+    chartTransfer.next(runs.map(item => item.stats))
     return runs.map((run, index) => <Run key={index} {...run} />)
   }
 
-  handleAllRuns = () => {
-    this.setState({allRun: true})
-  }
+  handleAllRuns = () => this.setState({allRun: true})
 
-  handleOneRun = () => {
-    this.setState({allRun: false})
-  }
+  handleOneRun = () => this.setState({allRun: false})
 
   render() {
     return (

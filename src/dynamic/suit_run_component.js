@@ -5,7 +5,6 @@ export class SuitRun extends Component {
 
   renderTests = () => {
     const {tests} = this.props
-    console.log(this.props)
     return tests.map((test, index) => <Test key={index} {...test} />)
   }
 

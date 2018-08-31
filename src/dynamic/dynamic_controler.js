@@ -5,22 +5,14 @@ import {componentTransfer} from '../ui-control/rx_ui_control'
 
 export default class DynamicController extends Component {
 
-  state = {
-    testsData: null
-  }
+  state = {testsData: null}
 
-  componentWillMount() {
-    componentTransfer.subscribe((data) => {
-      console.log(data)
-      this.setState({testsData: data}, () => {
-        console.log(this.state)
-      })
-    })
-  }
+  componentWillMount() {componentTransfer.subscribe((data) => this.setState({testsData: data}))}
 
   componentWillUnmount() {componentTransfer.unsubscribe()}
 
   closeCurrentRunInfo = () => {this.setState({suitInfo: false, testsData: null})}
+
   render() {
     const {testsData} = this.state
     return (
