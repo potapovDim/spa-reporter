@@ -5,6 +5,7 @@ node_modules/
 package-lock.json
 reporter
 src/resources/*.*
+src/images/*.*
 src/reducers/base.json
 dist
 rep

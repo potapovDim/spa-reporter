@@ -47,9 +47,10 @@ function getSuitToData(suitData, file) {
       const title = step.title
       const attachments = step.files.map(function(file) {
         const ext = path.extname(path.resolve(dir, file))
+        if(!fs.existsSync('./src/images')) {fs.mkdirSync('./src/images')}
         if(ext === '.png') {
           fs.createReadStream(path.resolve(dir, file)).pipe(fs.createWriteStream(path.resolve(__dirname, `./src/images/${file}`)))
-          return {img: `/images/${file}`}
+          return {img: `./images/${file}`}
         } else if(ext === '.json') {
           return {json: require(path.resolve(dir, file))}
         } else {

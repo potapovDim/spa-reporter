@@ -2,6 +2,7 @@ const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const SvgStore = require('webpack-svgstore-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = {
   entry: path.resolve('./src/index.js'),
@@ -68,16 +69,10 @@ module.exports = {
     ]
   },
   plugins: [
+    new CopyWebpackPlugin([{from: path.resolve(__dirname, './src/images'), to: path.resolve(__dirname, './dist/images')}]),
     new ExtractTextPlugin({filename: 'style.css', allChunks: true}),
-    new SvgStore({
-      svgoOptions: {
-        plugins: [{removeTitle: true}]
-      },
-      prefix: 'icon'
-    }),
-    new ExtractTextPlugin({
-      filename: '[name].css'
-    }),
+    new SvgStore({svgoOptions: {plugins: [{removeTitle: true}]}, prefix: 'icon'}),
+    new ExtractTextPlugin({filename: '[name].css'}),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, './index.html'),
       inject: true,
