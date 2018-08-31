@@ -10,7 +10,7 @@ import Layout from './ui/layout'
 class Page extends Component {
   render() {
     return (
-      <div>
+      <div className="">
         <Menu />
         <Layout />
       </div>

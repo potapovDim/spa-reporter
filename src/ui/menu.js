@@ -11,6 +11,7 @@ class Menu extends Component {
   componentDidMount() {
 
   }
+
   hadnleFilter = ({target: {value}}) => {
     const {filterByBrowser} = this.props
     filterByBrowser(value)

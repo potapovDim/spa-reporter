@@ -17,11 +17,6 @@ class Layout extends Component {
     return runs.map((run, index) => <Run key={index} {...run} />)
   }
 
-  // shouldComponentUpdate(nextProps) {
-  //   if(nextProps.runs.length !== this.props.runs.length) {return true}
-  //   return false
-  // }
-
   handleAllRuns = () => {
     this.setState({allRun: true})
   }
@@ -33,10 +28,6 @@ class Layout extends Component {
   render() {
     return (
       <div className="layout">
-        <nav className="controls">
-          <button className="controls__item" onClick={this.handleAllRuns}>Render all runs</button>
-          <button className="controls__item" onClick={this.handleOneRun}>Render one run</button>
-        </nav>
         {this.renderRun()}
         <h2>Results</h2>
       </div>
