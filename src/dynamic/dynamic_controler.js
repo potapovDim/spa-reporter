@@ -1,5 +1,3 @@
-const {EventEmitter} = require('events')
-
 import React, {Component} from 'react'
 import {Chart} from './chart_component'
 import {SuitRun} from './suit_run_component'
@@ -19,16 +17,12 @@ export default class DynamicController extends Component {
       })
     })
   }
-  componentWillUnmount() {
-    componentTransfer.unsubscribe()
-  }
 
-  closeCurrentRunInfo = () => {
-    this.setState({suitInfo: false, testsData: null})
-  }
+  componentWillUnmount() {componentTransfer.unsubscribe()}
+
+  closeCurrentRunInfo = () => {this.setState({suitInfo: false, testsData: null})}
   render() {
     const {testsData} = this.state
-    console.log(this.state)
     return (
       <div>
         {

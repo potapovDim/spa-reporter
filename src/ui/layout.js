@@ -13,6 +13,7 @@ class Layout extends Component {
   }
 
   renderRun = () => {
+    console.log(this.props)
     const {runs} = this.props
     return runs.map((run, index) => <Run key={index} {...run} />)
   }
