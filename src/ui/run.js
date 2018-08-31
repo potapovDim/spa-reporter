@@ -5,6 +5,7 @@ import {Suit} from './suit'
 import './style/style.scss'
 
 export class Run extends Component {
+
   renderSuits = () => {
     const {suits} = this.props
     return suits.map((suit, index) => <Suit key={index} {...suit} />)
