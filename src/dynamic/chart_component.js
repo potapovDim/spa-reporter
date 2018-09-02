@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import {Doughnut} from 'react-chartjs-2'
-import {chartTransfer} from '../ui-control/rx_ui_control'
 
 const data = {
   labels: [
@@ -27,7 +26,12 @@ const data = {
 }
 
 export class Chart extends Component {
-  componentWillMount() {chartTransfer.subscribe()}
+  state = {}
+
+  componentWillMount() {
+
+  }
+
   render() {
     const props = {
       height: 400,

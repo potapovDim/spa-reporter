@@ -1,20 +1,26 @@
 import React, {Component} from 'react'
 import {Chart} from './chart_component'
 import {SuitRun} from './suit_run_component'
-import {componentTransfer} from '../ui-control/rx_ui_control'
+import {componentTransfer, chartTransfer} from '../ui-control/rx_ui_control'
 
 export default class DynamicController extends Component {
 
-  state = {testsData: null}
+  state = {testsData: null, stats: null}
 
-  componentWillMount() {componentTransfer.subscribe((data) => this.setState({testsData: data}))}
+  componentWillMount() {
+    componentTransfer.subscribe((data) => this.setState({testsData: data}))
+  }
 
-  componentWillUnmount() {componentTransfer.unsubscribe()}
+  componentWillUnmount() {
+    componentTransfer.unsubscribe()
+  }
 
-  closeCurrentRunInfo = () => {this.setState({suitInfo: false, testsData: null})}
+  closeCurrentRunInfo = () => {
+    this.setState({testsData: null})
+  }
 
   render() {
-    const {testsData} = this.state
+    const {testsData, stats} = this.state
     return (
       <div>
         {

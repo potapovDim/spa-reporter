@@ -5,9 +5,7 @@ import {Run} from './run'
 import {chartTransfer} from '../ui-control/rx_ui_control'
 
 class Layout extends Component {
-  state = {
-    allRun: true
-  }
+  state = {allRun: true}
 
   renderRun = () => {
     const {runs} = this.props
