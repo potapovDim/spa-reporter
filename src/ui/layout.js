@@ -9,7 +9,6 @@ class Layout extends Component {
 
   renderRun = () => {
     const {runs} = this.props
-    chartTransfer.next(runs.map(item => item.stats))
     return runs.map((run, index) => <Run key={index} {...run} />)
   }
 

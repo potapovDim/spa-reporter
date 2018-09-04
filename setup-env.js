@@ -72,13 +72,14 @@ function putBaseFile() {
     const lastDir = path.dirname(file).split('/')
     const JSON_DATA = require(file)
     const stats = JSON_DATA.stats
+    const runName = JSON_DATA.runName
     const opts = JSON_DATA.opts
     const title = JSON.title
 
     const suits = JSON_DATA.suits.map(function(suit) {
       return getSuitToData(suit, file)
     })
-    return {stats, suits, opts, dirDate: lastDir[lastDir.length - 1]}
+    return {stats, runName, suits, opts, dirDate: lastDir[lastDir.length - 1]}
   })
   if(fs.existsSync(path.resolve(__dirname, './src/reducers/base.json'))) {
     fs.unlinkSync(path.resolve(__dirname, './src/reducers/base.json'))

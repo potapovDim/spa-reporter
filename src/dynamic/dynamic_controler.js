@@ -1,9 +1,10 @@
 import React, {Component} from 'react'
+import {connect} from 'react-redux'
 import {Chart} from './chart_component'
 import {SuitRun} from './suit_run_component'
 import {componentTransfer, chartTransfer} from '../ui-control/rx_ui_control'
 
-export default class DynamicController extends Component {
+class DynamicController extends Component {
 
   state = {testsData: null, stats: null}
 
@@ -20,7 +21,8 @@ export default class DynamicController extends Component {
   }
 
   render() {
-    const {testsData, stats} = this.state
+    const {testsData} = this.state
+    const {generalStats} = this.props
     return (
       <div>
         {
@@ -29,9 +31,11 @@ export default class DynamicController extends Component {
               <button onClick={this.closeCurrentRunInfo}>close Info</button>
               <SuitRun tests={testsData} />
             </div>
-            : <Chart />
+            : <Chart stats={generalStats} />
         }
       </div>
     )
   }
 }
+
+export default connect(({runs}) => ({generalStats: runs.map(run => ({...run.stats, runName: run.runName}))}))(DynamicController)
