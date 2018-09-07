@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import {Doughnut, HorizontalBar} from 'react-chartjs-2'
 
-
 const getDurationChart = ({stats}) => {
   return stats.reduce((dataStruct, statItem) => {
     dataStruct.labels.push(statItem.runName)
@@ -60,21 +59,46 @@ const mapData = (elementData) => {
 }
 
 
+const options = {
 
+}
 
 export class Chart extends Component {
-  state = {}
 
+  componentDidMount() {
+    const clicker = this.horizontalBar.chartInstance._listeners.click
+    this.horizontalBar.chartInstance._listeners.click = function(...args) {
+      clicker(args)
+    }
+
+  }
+  // horisontBarClick = () => {
+  //   console.log('!!!!!!!!!!!!!!!!!!!', arguments)
+  // }
+  // getDatasetAtEvent = () => {
+  //   console.log('!!!!!!!!!!!!!!!!!!!', arguments)
+  // }
+  // getDatasetAtEvent = () => {
+  //   console.log('!!!!!!!!!!!!!!!!!!!', arguments)
+  // }
+  getElementAtEvent = () => {
+    console.log(arguments)
+  }
   render() {
     console.log(JSON.stringify(this.props))
     const props = {
       height: 400,
       width: 500
     }
+    // onElementsClick={this.horisontBarClick} getDatasetAtEvent={this.getDatasetAtEvent}
     console.log(this.props.stats)
     return <div>
-      <HorizontalBar data={getDurationChart(this.props)} />
-      <Doughnut  {...props} />
+      <HorizontalBar
+        {...props}
+        ref={(ref) => this.horizontalBar = ref}
+        data={getDurationChart(this.props)}
+        getElementAtEvent={this.getElementAtEvent} />
+      {/* <Doughnut  {...props} /> */}
     </div>
   }
 }
