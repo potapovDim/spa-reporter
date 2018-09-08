@@ -23,7 +23,6 @@ class DynamicController extends Component {
   render() {
     const {testsData} = this.state
     const {generalStats} = this.props
-    console.log(generalStats)
     return (
       <div>
         <MainChart />

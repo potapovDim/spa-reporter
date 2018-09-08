@@ -85,7 +85,7 @@ export class Chart extends Component {
     console.log(arguments)
   }
   render() {
-    console.log(JSON.stringify(this.props))
+    // console.log(JSON.stringify(this.props))
     const props = {
       height: 400,
       width: 500

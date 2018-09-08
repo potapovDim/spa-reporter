@@ -33,6 +33,10 @@ class MainChart extends Component {
         }]
       },
       options: {
+        // onClick: function() {
+        //   console.log(arguments)
+        // },
+        events: ['click'],
         scales: {
           yAxes: [{
             ticks: {
@@ -44,9 +48,13 @@ class MainChart extends Component {
     })
   }
 
+  handleClick = (e) => {
+    const a = this.myChart.getElementAtEvent(e)
+  }
+
   render() {
     return (<div>
-      <canvas id="myChart" width="400" height="400"></canvas>
+      <canvas id="myChart" width="400" height="400" onClick={this.handleClick}></canvas>
     </div>)
   }
 }
