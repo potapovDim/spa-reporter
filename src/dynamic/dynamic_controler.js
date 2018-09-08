@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {Chart} from './chart_component'
 import {SuitRun} from './suit_run_component'
 import {componentTransfer, chartTransfer} from '../ui-control/rx_ui_control'
-
+import MainChart from '../main-charts'
 class DynamicController extends Component {
 
   state = {testsData: null, stats: null}
@@ -26,14 +26,15 @@ class DynamicController extends Component {
     console.log(generalStats)
     return (
       <div>
-        {
+        <MainChart />
+        {/* {
           testsData
             ? <div>
               <button onClick={this.closeCurrentRunInfo}>close Info</button>
               <SuitRun tests={testsData} />
             </div>
             : <Chart stats={generalStats} />
-        }
+        } */}
       </div>
     )
   }
