@@ -22,7 +22,7 @@ class DynamicController extends Component {
 
   render() {
     const {testsData} = this.state
-    const {generalStats} = this.props
+    const {runs} = this.props
     return (
       <div>
         {
@@ -31,11 +31,11 @@ class DynamicController extends Component {
               <button onClick={this.closeCurrentRunInfo}>close Info</button>
               <SuitRun tests={testsData} />
             </div>
-            : <Chart stats={generalStats} />
+            : <Chart runs={runs} />
         }
       </div>
     )
   }
 }
-
-export default connect(({runs}) => ({generalStats: runs.map(run => ({...run.stats, runName: run.runName}))}))(DynamicController)
+// generalStats: runs.map(run => ({...run.stats, runName: run.runName}))
+export default connect(({runs}) => ({runs}))(DynamicController)
