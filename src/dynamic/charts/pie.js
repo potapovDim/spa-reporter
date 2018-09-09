@@ -1,80 +1,35 @@
 import React, {Component} from 'react'
 import {Chart} from 'chart.js'
 import getRandomColor from '../../random_color'
+import pick from 'lodash/pick'
 
-const getData = (run) => {
+const getData = ({requiredRun: {stats}}) => {
+  const pickData = pick(stats, ['failures', 'passes', 'pending'])
+  const colors = {
+    failures: 'rgba(255, 0, 0, 0.6)',
+    passes: 'rgba(0, 255, 0, 0.6)',
+    pending: 'rgba(0, 0, 255, 0.6)'
+  }
   const dataAcc = {
-    labels: [],
     datasets: [{
-      label: 'Run time duration',
       data: [],
-      backgroundColor: [],
-      borderColor: [],
-      borderWidth: 1
-    }]
-  }
-  const data = runs.reduce((acc, item) => {
-    acc.labels.push(item.runName)
-    acc.datasets[0].data.push(item.stats.duration)
-    acc.datasets[0].backgroundColor.push(getRandomColor(0.3))
-    return acc
-  }, dataAcc)
-  return {data}
-}
-
-var config = {
-  type: 'pie',
-  data: {
-    datasets: [{
-      data: [
-
-      ],
-      backgroundColor: [
-
-      ]
+      backgroundColor: []
     }],
-    labels: [
-      'Red',
-      'Orange',
-      'Yellow',
-      'Green',
-      'Blue'
-    ]
-  },
-  options: {
-    responsive: true
-  },
-  options: {
-    title: {
-      text: 'Chart.js Time Scale'
-    },
-    scales: {
-      xAxes: [{
-        type: 'time',
-        time: {
-          tooltipFormat: 'll HH:mm'
-        },
-        scaleLabel: {
-          display: true,
-          labelString: 'Date'
-        }
-      }],
-      yAxes: [{
-        scaleLabel: {
-          display: true,
-          labelString: 'value'
-        }
-      }]
-    },
+    labels: []
   }
-};
-
-
+  Object.keys(pickData).forEach((key) => {
+    dataAcc.datasets[0].data.push(pickData[key])
+    dataAcc.datasets[0].backgroundColor.push(colors[key])
+    dataAcc.labels.push(key)
+  })
+  return {data: dataAcc}
+}
 
 export class PieChart extends Component {
   componentDidMount() {
-    this.ctxCanvas = document.getElementById("myChart").getContext('2d')
-    this.myChart = new Chart(this.ctxCanvas, {type: 'pie'})
+    console.log(this.props)
+    this.ctxCanvas = document.getElementById("my__pie_chart").getContext('2d')
+    this.myChart = new Chart(this.ctxCanvas, {type: 'pie', ...getData(this.props)})
   }
 
   handleClick = (e) => {
@@ -83,7 +38,7 @@ export class PieChart extends Component {
 
   render() {
     return (
-      <div><canvas id="myChart" width="400" height="400" onClick={this.handleClick}></canvas></div>
+      <div><canvas id="my__pie_chart" width="400" height="400" onClick={this.handleClick}></canvas></div>
     )
   }
 }
