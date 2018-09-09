@@ -1,58 +1,25 @@
 import React, {Component} from 'react'
-import {Chart} from 'chart.js'
-import getRandomColor from '../random_color'
+import {BarChart} from './charts/bar'
+import {PieChart} from './charts/pie'
 
 export default class MainChart extends Component {
-  componentDidMount() {
-    this.ctxCanvas = document.getElementById("myChart").getContext('2d')
-    this.myChart = new Chart(this.ctxCanvas, {
-      type: 'bar',
-      data: {
-        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-        datasets: [{
-          label: '# of Votes',
-          data: [12, 19, 3, 5, 2, 3],
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)'
-          ],
-          borderColor: [
-            'rgba(255,99,132,1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)'
-          ],
-          borderWidth: 1
-        }]
-      },
-      options: {
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero: true
-            }
-          }]
-        }
-      }
-    })
+  state = {}
+
+  handleRunFocus = ({label}) => {
+    const {runs} = this.props
+    const requiredRun = runs.find((item) => (item.runName === label))
+    this.setState({line: {label, requiredRun}})
   }
 
-  handleClick = (e) => {
-    const a = this.myChart.getElementAtEvent(e)
-    console.log(a)
+  getContent = () => {
+    const {line} = this.state
+    if(line) {return <PieChart {...line} />}
+    else {return <BarChart {...this.props} handleRunFocus={this.handleRunFocus} />}
   }
 
   render() {
     return (
-      <div><canvas id="myChart" width="400" height="400" onClick={this.handleClick}></canvas></div>
+      <div>{this.getContent()}</div>
     )
   }
 }
-
-// export default connect(state => state)(MainChart)
