@@ -1,104 +1,60 @@
 import React, {Component} from 'react'
-import {Doughnut, HorizontalBar} from 'react-chartjs-2'
+import {Chart} from 'chart.js'
 
-const getDurationChart = ({stats}) => {
-  return stats.reduce((dataStruct, statItem) => {
-    dataStruct.labels.push(statItem.runName)
-    dataStruct.datasets[0].data.push(statItem.duration)
-    return dataStruct
-  }, {
-      labels: [],
-      datasets: [
-        {
-          label: 'Base run stats duration',
-          backgroundColor: 'rgba(255,99,132,0.2)',
-          borderColor: 'rgba(255,99,132,1)',
-          borderWidth: 2,
-          hoverBackgroundColor: 'rgba(255,99,132,0.4)',
-          hoverBorderColor: 'rgba(255,99,132,1)',
-          data: []
+export default class MainChart extends Component {
+  componentDidMount() {
+    this.ctxCanvas = document.getElementById("myChart").getContext('2d')
+    this.myChart = new Chart(this.ctxCanvas, {
+      type: 'bar',
+      data: {
+        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+        datasets: [{
+          label: '# of Votes',
+          data: [12, 19, 3, 5, 2, 3],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)'
+          ],
+          borderColor: [
+            'rgba(255,99,132,1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        // onClick: function() {
+        //   console.log(arguments)
+        // },
+        events: ['click'],
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
         }
-      ]
-    })
-}
-
-const mapData = (elementData) => {
-  const dataForChart = elementData.reduce((acc, item) => {
-    acc.labels.push()
-  }, {
-      labels: [], datasets: {
-        data: [],
-        backgroundColor: [],
-        hoverBackgroundColor: []
       }
     })
-
-  const data = {
-    labels: [
-      'Red',
-      'Green',
-      'Yellow'
-    ],
-    datasets: [{
-
-      data: [300, 50, 100, 333],
-      backgroundColor: [
-        '#FF6384',
-        '#36A2EB',
-        '#FFCE56',
-        '#EFDBB2'
-      ],
-      hoverBackgroundColor: [
-        '#FF6384',
-        '#36A2EB',
-        '#FFCE56',
-        '#F6546A'
-      ]
-    }]
   }
-}
 
-
-const options = {
-
-}
-
-export class Chart extends Component {
-
-  componentDidMount() {
-    const clicker = this.horizontalBar.chartInstance._listeners.click
-    this.horizontalBar.chartInstance._listeners.click = function(...args) {
-      clicker(args)
-    }
-
+  handleClick = (e) => {
+    const a = this.myChart.getElementAtEvent(e)
   }
-  // horisontBarClick = () => {
-  //   console.log('!!!!!!!!!!!!!!!!!!!', arguments)
-  // }
-  // getDatasetAtEvent = () => {
-  //   console.log('!!!!!!!!!!!!!!!!!!!', arguments)
-  // }
-  // getDatasetAtEvent = () => {
-  //   console.log('!!!!!!!!!!!!!!!!!!!', arguments)
-  // }
-  getElementAtEvent = () => {
-    console.log(arguments)
-  }
+
   render() {
-    // console.log(JSON.stringify(this.props))
-    const props = {
-      height: 400,
-      width: 500
-    }
-    // onElementsClick={this.horisontBarClick} getDatasetAtEvent={this.getDatasetAtEvent}
-    console.log(this.props.stats)
-    return <div>
-      <HorizontalBar
-        {...props}
-        ref={(ref) => this.horizontalBar = ref}
-        data={getDurationChart(this.props)}
-        getElementAtEvent={this.getElementAtEvent} />
-      {/* <Doughnut  {...props} /> */}
-    </div>
+    return (<div>
+      <canvas id="myChart" width="400" height="400" onClick={this.handleClick}></canvas>
+    </div>)
   }
 }
+
+// export default connect(state => state)(MainChart)
