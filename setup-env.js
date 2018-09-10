@@ -9,7 +9,6 @@ function executeCopyDir(reportPath) {
   copyDir.sync(path.resolve(process.cwd(), reportPath), reportDir)
 }
 
-// fs.createReadStream('./package-lock.json').pipe(fs.createWriteStream('./src/images/newfile.json'));
 const walkSync = function(dir, filelist = []) {
   const files = fs.readdirSync(dir)
   files.forEach(function(file) {

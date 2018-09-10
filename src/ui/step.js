@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {File} from './file'
+import './style/step.scss'
 
 export class Step extends Component {
   state = {showAttachments: false}
@@ -12,7 +13,7 @@ export class Step extends Component {
     }
     return (
       <div>
-        <div onClick={this.showHideAttachments}>Step:{title}</div>
+        <div className={attachments.length ? 'step__with_attachments' : 'step__without_attachments'} onClick={this.showHideAttachments}>Step:{title}</div>
         {renderFiles()}
       </div >
     )
