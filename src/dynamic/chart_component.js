@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {BarChart} from './charts/bar'
 import {PieChart} from './charts/pie'
+import {componentTransfer} from '../ui-control/rx_ui_control'
 
 export default class MainChart extends Component {
   state = {}
@@ -11,9 +12,19 @@ export default class MainChart extends Component {
     this.setState({line: {label, requiredRun}})
   }
 
+  handFocusPie = ({runName, state}) => {
+    const {runs} = this.props
+    const requiredRun = runs.find((item) => (item.runName === runName))
+    const tests = requiredRun.suits.reduce((testsAcc, suit) => {
+      console.log(state)
+      testsAcc.push(...suit.tests.filter(testItem => testItem.state === state)); return testsAcc
+    }, [])
+    console.log(tests.length)
+  }
+
   getContent = () => {
     const {line} = this.state
-    if(line) {return <PieChart {...line} />}
+    if(line) {return <PieChart {...line} handFocusPie={this.handFocusPie} />}
     else {return <BarChart {...this.props} handleRunFocus={this.handleRunFocus} />}
   }
 

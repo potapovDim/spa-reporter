@@ -70,7 +70,21 @@ function putBaseFile() {
   const data = getSuitFiles().map(function(file) {
     const lastDir = path.dirname(file).split('/')
     const JSON_DATA = require(file)
-    const stats = JSON_DATA.stats
+    // need for consistency
+    /* {  suites: 9,
+          tests: 17,
+          passes: 6,
+          pending: 3,
+          failures: 11,
+          start: '2018-09-09T13:04:25.756Z',
+          end: '2018-09-09T13:04:27.365Z',
+          duration: 1609 }
+     */
+    const stats = {
+      ...JSON_DATA.stats,
+      passed: JSON_DATA.stats.passes,
+      failed: JSON_DATA.stats.failures
+    }
     const runName = JSON_DATA.runName
     const opts = JSON_DATA.opts
     const title = JSON.title
