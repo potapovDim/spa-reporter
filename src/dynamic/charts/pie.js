@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {Chart} from 'chart.js'
 import getRandomColor from '../../random_color'
 import pick from 'lodash/pick'
+import {componentTransfer} from '../../ui-control/rx_ui_control'
 
 const getData = ({requiredRun: {stats}}) => {
   const pickData = pick(stats, ['failures', 'passes', 'pending'])
@@ -27,13 +28,13 @@ const getData = ({requiredRun: {stats}}) => {
 
 export class PieChart extends Component {
   componentDidMount() {
-    console.log(this.props)
+    console.log(this.props, '!!!!!!!!')
     this.ctxCanvas = document.getElementById("my__pie_chart").getContext('2d')
     this.myChart = new Chart(this.ctxCanvas, {type: 'pie', ...getData(this.props)})
   }
 
   handleClick = (e) => {
-    // const [{_model: {label}}] = this.myChart.getElementAtEvent(e)
+    const data = this.myChart.getElementAtEvent(e)
   }
 
   render() {

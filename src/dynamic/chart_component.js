@@ -7,7 +7,6 @@ export default class MainChart extends Component {
 
   handleRunFocus = ({label}) => {
     const {runs} = this.props
-    console.log(label)
     const requiredRun = runs.find((item) => (item.runName === label))
     this.setState({line: {label, requiredRun}})
   }
