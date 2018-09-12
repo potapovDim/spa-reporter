@@ -14,12 +14,16 @@ export default class MainChart extends Component {
 
   handFocusPie = ({runName, state}) => {
     const {runs} = this.props
-    const requiredRun = runs.find((item) => (item.runName === runName))
-    const tests = requiredRun.suits.reduce((testsAcc, suit) => {
-      console.log(state)
-      testsAcc.push(...suit.tests.filter(testItem => testItem.state === state)); return testsAcc
-    }, [])
-    console.log(tests.length)
+    const tests = runs
+      .find((item) => (item.runName === runName))
+      .suits
+      .reduce((testsAcc, suit) => {
+        testsAcc.push(...suit
+          .tests
+          .filter((testItem) => testItem.state === state));
+        return testsAcc
+      }, [])
+    componentTransfer.next(tests)
   }
 
   getContent = () => {
