@@ -3,12 +3,19 @@ import {Step} from './step'
 import './style/test.scss'
 
 export class Test extends Component {
+  state = {open: false}
+
   renderSteps = () => {
     const {steps} = this.props
     return steps.map((step, index) => <Step key={index} {...step} />)
   }
+
+  openDetails = () => this.setState({open: !this.state.open})
+
   render() {
+    const {open} = this.state
     const {title, start, end, duration, state} = this.props
+
     const getClass = () => {
       switch(state) {
         case 'failed': return 'failed';
@@ -18,14 +25,16 @@ export class Test extends Component {
     }
     return (
       <div className={"suit__content " + getClass()}>
-        <div> Test: {title}</div >
-        <div className="flex__test">
-          <div className="test__header_item">State: {state}</div>
-          {/*<div className="test__header_item">Start: {start} </div>*/}
-          <div className="test__header_item">Duration: {duration}</div>
-          {/*<div className="test__header_item">End: {end} </div> */}
-        </div>
-        {this.renderSteps()}
+        <div onClick={this.openDetails}> Test: {title}</div >
+        {open &&
+          <div className="flex__test">
+            <div className="test__header_item">State: {state}</div>
+            {/*<div className="test__header_item">Start: {start} </div>*/}
+            <div className="test__header_item">Duration: {duration}</div>
+            {/*<div className="test__header_item">End: {end} </div> */}
+            <div>{this.renderSteps()}</div>
+          </div>
+        }
       </div >
     )
   }
