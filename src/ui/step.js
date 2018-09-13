@@ -3,18 +3,21 @@ import {File} from './file'
 import './style/step.scss'
 
 export class Step extends Component {
-  state = {showAttachments: false}
-  showHideAttachments = () => {this.setState({showAttachments: !this.state.showAttachments})}
+  state = {open: false}
+
+  openContent = () => this.setState({open: !this.state.open})
+
+  renderContent = () => {
+    const {attachments = []} = this.props
+    return attachments.map((file, index) => <File key={index} file={file} />)
+  }
   render() {
-    const {showAttachments} = this.state
-    const {attachments, title} = this.props
-    const renderFiles = () => {
-      return showAttachments && attachments.length ? attachments.map((file, index) => <File key={index} file={file} />) : null
-    }
+    const {open} = this.state
+    const {title, attachments} = this.props
     return (
       <div>
-        <div className={attachments.length ? 'step__with_attachments' : 'step__without_attachments'} onClick={this.showHideAttachments}>Step:{title}</div>
-        {renderFiles()}
+        <div className={attachments.length ? 'step__with_attachments' : 'step__without_attachments'} onClick={this.openContent}>Step:{title}</div>
+        {open && this.renderContent()}
       </div >
     )
   }
