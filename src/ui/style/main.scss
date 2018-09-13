@@ -5,3 +5,14 @@
 .layout__content {
   width: 700px;
 }
+
+.suit {
+  width: 300px;
+}
+
+.truncate.suit__button {
+  width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

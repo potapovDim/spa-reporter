@@ -23,7 +23,7 @@ export default class MainChart extends Component {
           .filter((testItem) => testItem.state === state));
         return testsAcc
       }, [])
-    componentTransfer.next(tests)
+    componentTransfer.next({tests})
   }
 
   getContent = () => {

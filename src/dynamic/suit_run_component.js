@@ -3,12 +3,12 @@ import {Test} from '../ui/test'
 
 export class SuitRun extends Component {
 
-  renderTests = () => {
+  renderContent = () => {
     const {tests} = this.props
     return tests.map((test, index) => <Test key={index} {...test} />)
   }
 
   render() {
-    return (<div>{this.renderTests()}</div>)
+    return (<div>{this.renderContent()}</div>)
   }
 }

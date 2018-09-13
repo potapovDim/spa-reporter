@@ -26,44 +26,58 @@ function getSuitFiles() {
   })
 }
 
+
+function mapStepsToRequiredData(steps, file) {
+  const dir = path.dirname(file)
+  return steps.map(function(step) {
+    const title = step.title
+    const attachments = step.files.map(function(file) {
+      const ext = path.extname(path.resolve(dir, file))
+      if(!fs.existsSync('./src/images')) {fs.mkdirSync('./src/images')}
+      if(ext === '.png') {
+        fs.createReadStream(path.resolve(dir, file)).pipe(fs.createWriteStream(path.resolve(__dirname, `./src/images/${file}`)))
+        return {img: `./images/${file}`}
+      } else if(ext === '.json') {
+        return {json: require(path.resolve(dir, file))}
+      } else {
+        const text = fs.readFileSync(path.resolve(dir, file)).toString('utf8')
+        return {text}
+      }
+    })
+    return {title, attachments}
+  })
+}
+
 const testStackIncludes = ['failed', 'broken']
 
 function getSuitToData(suitData, file) {
-  const dir = path.dirname(file)
   const title = suitData.title
   const status = suitData.status
   const browser = suitData.browser
+
+  const hooks = suitData.hooks.map(function(hook) {
+    const title = hook.title
+    const start = hook.timeStart
+    const end = hook.timeEnd
+    const state = hook.state
+    const duration = hook.duration
+    const steps = mapStepsToRequiredData(hook.steps, file)
+
+    return {title, start, state, end, duration, steps, errorStack: testStackIncludes.includes(state) ? hook.errorStack.stack : undefined}
+  })
 
   const tests = suitData.tests.map(function(test) {
     const title = test.title
     const start = test.timeStart
     const end = test.timeEnd
     const state = test.state
-
     const duration = test.duration
+    const steps = mapStepsToRequiredData(test.steps, file)
 
-    const steps = test.steps.map(function(step) {
-      const title = step.title
-      const attachments = step.files.map(function(file) {
-        const ext = path.extname(path.resolve(dir, file))
-        if(!fs.existsSync('./src/images')) {fs.mkdirSync('./src/images')}
-        if(ext === '.png') {
-          fs.createReadStream(path.resolve(dir, file)).pipe(fs.createWriteStream(path.resolve(__dirname, `./src/images/${file}`)))
-          return {img: `./images/${file}`}
-        } else if(ext === '.json') {
-          return {json: require(path.resolve(dir, file))}
-        } else {
-          const text = fs.readFileSync(path.resolve(dir, file)).toString('utf8')
-          return {text}
-        }
-      })
-      return {title, attachments}
-    })
-    const result = {title, start, state, end, duration, steps, errorStack: testStackIncludes.includes(state) ? test.errorStack.stack : undefined}
+    return {title, start, state, end, duration, steps, errorStack: testStackIncludes.includes(state) ? test.errorStack.stack : undefined}
 
-    return result
   })
-  return {title, status, tests, browser}
+  return {title, status, hooks, tests, browser}
 }
 
 function putBaseFile() {

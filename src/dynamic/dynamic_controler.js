@@ -29,7 +29,7 @@ class DynamicController extends Component {
           testsData
             ? <div>
               <button onClick={this.closeCurrentRunInfo}>close Info</button>
-              <SuitRun tests={testsData} />
+              <SuitRun {...testsData} />
             </div>
             : <Chart runs={runs} />
         }

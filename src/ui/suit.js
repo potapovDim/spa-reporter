@@ -3,13 +3,13 @@ import {componentTransfer} from '../ui-control/rx_ui_control'
 export class Suit extends Component {
   state = {open: false}
 
-  openInfo = () => componentTransfer.next(this.props.tests)
+  openInfo = () => componentTransfer.next({tests: this.props.tests, hooks: this.props.hooks})
 
   render() {
     const {title} = this.props
     return (
       <div className="suit">
-        <button type="button" className="suit__button" onClick={this.openInfo}>Suit: {title}</button>
+        <span className="suit__button truncate" onClick={this.openInfo}>Suit: {title}</span>
       </div>
     )
   }
