@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css?family=Rajdhani');
+
+.__main-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.anim {
+  width: 5px;
+  height: 5px;
+  position: relative;
+  animation: loading-rotation 5s linear infinite;
+  border: solid 4px #c62828;
+  border-radius: 50%;
+}
+
+@media only screen and (min-width: 500px) {
+  .anim {
+    width: 25px;
+    height: 25px;
+  }
+}
+
+@keyframes loading-rotation {
+  50% {
+    border-color: #1565c0;
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.anim div {
+  height: 5px;
+  width: 5px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #c62828;
+  border-radius: 50%;
+  animation: loading-planet 5s linear infinite;
+}
+
+@media only screen and (min-width: 768px) {
+  .anim div {
+    width: 7px;
+    height: 7px;
+  }
+}
+
+@keyframes loading-planet {
+  50% {
+    background: #1565c0;
+  }
+}
+
+.text {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 0.2em;
+  color: #c62828;
+  animation: loading-text 5s linear infinite;
+}
+
+@media only screen and (min-width: 768px) {
+  .text {
+    font-size: 20px;
+    letter-spacing: 0.3em;
+  }
+}
+
+@keyframes loading-text {
+  50% {
+    color: #1565c0;
+  }
+}

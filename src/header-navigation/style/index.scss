@@ -1,0 +1,194 @@
+// =========================================
+// # RESET
+// =========================================
+*,
+*:after,
+*:before {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+// =========================================
+// # STRUCTURE
+// =========================================
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: 'Open Sans', sans-serif;
+}
+
+// =========================================
+// # NAV COMPONENT
+// =========================================
+.nav {display: flex;}
+
+.nav__item {
+  position: relative;
+  display: inline-block;
+  margin-right: 2.5rem;
+  padding: 0.5rem 0;
+  text-decoration: none;
+  cursor: pointer;
+  &:last-child {
+    margin-right: 0;
+  }
+  &:hover>.nav__subnav {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.nav__label {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  color: #333;
+  transition: color ease .3s;
+}
+
+.nav__icon {
+  display: flex;
+  background: #ccc;
+  width: 12px;
+  height: 12px;
+  margin-left: 0.75rem;
+}
+
+.nav__icon--left {
+  order: -1;
+  margin-left: 0;
+  margin-right: 0.75rem;
+}
+
+.nav__subnav {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  transform: translate3d(0, 100%, 0);
+  opacity: 0;
+  visibility: hidden;
+  z-index: 999;
+  background-color: #fff;
+  transition: opacity ease .3s, visibility ease .3s;
+  .nav__item {
+    width: 100%; // # crazy behavior
+    font-size: 0.85rem;
+    margin-right: 0;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+}
+
+.nav__subnav .nav__subnav {
+  top: 0;
+  left: 100%;
+  transform: translate3d(0, 0, 0);
+  bottom: initial;
+}
+
+.nav__subnav .nav__subnav--left {
+  left: 0;
+  transform: translate3d(-100%, 0, 0);
+}
+
+// =========================================
+// # STYLE
+// =========================================
+.page-section {
+  display: flex;
+  flex-direction: column;
+  // min-height: 50vh;
+  background: #eee;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  padding: 30px 30px 0 30px;
+  background-color: #fff;
+}
+
+.logo {
+  background: #ccc;
+  width: 100px;
+  height: 20px;
+}
+
+// =========================================
+// # THEME
+// =========================================
+// # nav
+$nav-font-fam: 'Open Sans',
+sans-serif;
+$nav-font-size: 0.9rem;
+$nav-font-weight: 700;
+$nav-color-active: #d42d2d;
+// # subnav
+$subnav-background: #171717;
+$subnav-color: #838383;
+$subnav-color-active: #fefefe;
+$sunav-font-size: 0.75rem;
+$subnav-item-padding: 2.5rem;
+$subnav-item-border: solid 1px #252525;
+$subnav-background-active: #252525;
+// # sub-subnav
+$sub-subnav-background: #2e3032;
+$sub-subnav-item-color: #838383;
+$sub-subnav-item-border: solid 1px #2e3032;
+$sub-subnav-background-active: #3a3c3e;
+// # nav
+.nav--primary {
+  font-family: $nav-font-fam;
+  font-size: $nav-font-size;
+  font-weight: $nav-font-weight;
+  >.nav__item:hover>.nav__label {
+    @extend %nav__item--active;
+  } // # subnav
+  .nav__subnav {
+    background-color: $subnav-background;
+    .nav__item {
+      border-bottom: $subnav-item-border;
+      transition: background ease .3s;
+      &:hover {
+        background-color: $subnav-background-active;
+        >.nav__label {
+          @extend %subnav__item--active;
+        }
+      }
+    }
+    .nav__label {
+      font-size: $sunav-font-size;
+      font-weight: 400;
+      color: $subnav-color;
+      padding-left: $subnav-item-padding;
+      padding-right: $subnav-item-padding;
+    }
+  } // # sub-subnav
+  .nav__subnav .nav__subnav {
+    background-color: $sub-subnav-background;
+    >.nav__item {
+      color: $sub-subnav-item-color;
+      border: $sub-subnav-item-border;
+      &:hover {
+        background-color: $sub-subnav-background-active;
+      }
+    }
+  } // # states
+  %nav__item--active {
+    color: $nav-color-active;
+  }
+  %subnav__item--active {
+    color: $subnav-color-active;
+  } // # state - using helper class
+  .nav__item.is-active>.nav__label {
+    @extend %nav__item--active;
+  } // # need extend all (like less feature)...
+  .nav__subnav .nav__item.is-active {
+    background-color: $subnav-background-active;
+    >.nav__label {
+      @extend %subnav__item--active;
+    }
+  }
+}

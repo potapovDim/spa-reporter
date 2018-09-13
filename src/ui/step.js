@@ -18,7 +18,7 @@ export class Step extends Component {
       <div>
         <div className={attachments.length ? 'step__with_attachments' : 'step__without_attachments'} onClick={this.openContent}>Step:{title}</div>
         {open && this.renderContent()}
-      </div >
+      </div>
     )
   }
 }
