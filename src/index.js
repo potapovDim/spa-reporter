@@ -20,7 +20,7 @@ class Page extends Component {
         <TopNav />
         <div className="main__content">
           <div className="menu__content">
-            <Menu />
+            {/* <Menu /> */}
           </div>
           <div className="layout__content">
             <Layout />

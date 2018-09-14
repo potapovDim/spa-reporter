@@ -31,8 +31,10 @@ export class BarChart extends Component {
 
   handleClick = (e) => {
     const {handleRunFocus} = this.props
-    const [{_model: {label}}] = this.myChart.getElementAtEvent(e)
-    handleRunFocus({label})
+    const elementData = this.myChart.getElementAtEvent(e)[0]
+    const {_model: {label}} = elementData
+    const duration = this.myChart.data.datasets[elementData._datasetIndex].data[elementData._index]
+    handleRunFocus({label, duration})
   }
 
   render() {

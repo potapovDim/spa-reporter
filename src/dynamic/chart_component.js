@@ -6,9 +6,11 @@ import {componentTransfer} from '../ui-control/rx_ui_control'
 export default class MainChart extends Component {
   state = {}
 
-  handleRunFocus = ({label}) => {
+  handleRunFocus = ({label, duration}) => {
     const {runs} = this.props
-    const requiredRun = runs.find((item) => (item.runName === label))
+    const requiredRun = runs.find((item) => {
+      return (item.stats.duration === duration) && (item.runName === label)
+    })
     this.setState({line: {label, requiredRun}})
   }
 
