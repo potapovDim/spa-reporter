@@ -3,7 +3,7 @@ import {Step} from './step'
 import './style/test.scss'
 
 export class Test extends Component {
-  state = {open: false}
+  state = {open: false, opts: false}
 
   renderSteps = () => {
     const {steps} = this.props
@@ -11,10 +11,11 @@ export class Test extends Component {
   }
 
   openDetails = () => this.setState({open: !this.state.open})
+  showOpts = () => this.setState({opts: !this.state.opts})
 
   render() {
-    const {open} = this.state
-    const {title, /*start, end, duration,*/ state} = this.props
+    const {open, opts} = this.state
+    const {title, /*start, end,*/ duration, state, testOptions} = this.props
 
     const getClass = () => {
       switch(state) {
@@ -25,9 +26,12 @@ export class Test extends Component {
     }
     return (
       <div className={"suit__content " + getClass()}>
-        <div onClick={this.openDetails}> Test: {title}</div >
+
+        <div onClick={this.openDetails}> Test: {title}</div>
         {open &&
           <div className="flex__test">
+            <div onMouseEnter={this.showOpts} onMouseLeave={this.showOpts} className="">Show options</div>
+            {opts && <div>{JSON.stringify(testOptions, null, '\t')}</div>}
             <div className="test__header_item">State: {state}</div>
             {/*<div className="test__header_item">Start: {start} </div>*/}
             <div className="test__header_item">Duration: {duration}</div>
