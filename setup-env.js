@@ -70,11 +70,12 @@ function getSuitToData(suitData, file) {
     const title = test.title
     const start = test.timeStart
     const end = test.timeEnd
+    const testOptions = test.testOptions
     const state = test.state
     const duration = test.duration
     const steps = mapStepsToRequiredData(test.steps, file)
 
-    return {title, start, state, end, duration, steps, errorStack: testStackIncludes.includes(state) ? test.errorStack.stack : undefined}
+    return {title, start, state, end, duration, steps, testOptions, errorStack: testStackIncludes.includes(state) ? test.errorStack.stack : undefined}
 
   })
   return {title, status, hooks, tests, browser}

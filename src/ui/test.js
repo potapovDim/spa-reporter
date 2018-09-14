@@ -14,7 +14,7 @@ export class Test extends Component {
 
   render() {
     const {open} = this.state
-    const {title, start, end, duration, state} = this.props
+    const {title, /*start, end, duration,*/ state} = this.props
 
     const getClass = () => {
       switch(state) {
