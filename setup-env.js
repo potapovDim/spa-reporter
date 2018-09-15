@@ -5,9 +5,7 @@ const path = require('path')
 const fs = require('fs')
 const reportDir = path.resolve(__dirname, './reporter')
 
-function executeCopyDir(reportPath) {
-  copyDir.sync(path.resolve(process.cwd(), reportPath), reportDir)
-}
+function executeCopyDir(reportPath) {copyDir.sync(path.resolve(process.cwd(), reportPath), reportDir)}
 
 const walkSync = function(dir, filelist = []) {
   const files = fs.readdirSync(dir)
@@ -20,11 +18,7 @@ const walkSync = function(dir, filelist = []) {
   return filelist
 }
 
-function getSuitFiles() {
-  return walkSync(reportDir).filter(function(file) {
-    return file.includes('-suit.json')
-  })
-}
+function getSuitFiles() {return walkSync(reportDir).filter(function(file) {return file.includes('-suit.json')})}
 
 
 function mapStepsToRequiredData(steps, file) {

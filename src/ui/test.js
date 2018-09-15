@@ -30,8 +30,10 @@ export class Test extends Component {
         <div onClick={this.openDetails}> Test: {title}</div>
         {open &&
           <div className="flex__test">
-            <div onMouseEnter={this.showOpts} onMouseLeave={this.showOpts} className="">Show options</div>
-            {opts && <div>{JSON.stringify(testOptions, null, '\t')}</div>}
+            <div>
+              {!!testOptions && <div onMouseEnter={this.showOpts} onMouseLeave={this.showOpts} className="">Show options</div>}
+              {opts && <div>{JSON.stringify(testOptions, null, '\t')}</div>}
+            </div>
             <div className="test__header_item">State: {state}</div>
             {/*<div className="test__header_item">Start: {start} </div>*/}
             <div className="test__header_item">Duration: {duration}</div>
