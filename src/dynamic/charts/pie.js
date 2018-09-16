@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import {Chart} from 'chart.js'
-import getRandomColor from '../../random_color'
 import pick from 'lodash/pick'
 
 const getData = ({requiredRun: {stats}}) => {
@@ -42,4 +42,9 @@ export class PieChart extends Component {
       <div><canvas id="my__pie_chart" width="400" height="400" onClick={this.handleClick}></canvas></div>
     )
   }
+}
+
+PieChart.propTypes = {
+  handFocusPie: PropTypes.func,
+  label: PropTypes.string
 }

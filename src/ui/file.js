@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 
 export class File extends Component {
 
@@ -9,7 +10,8 @@ export class File extends Component {
       text: (textContent) => <div>{textContent}</div>,
       json: (jsonContent) => <div>{JSON.stringify(jsonContent, null, '\t')}</div>
     }
-    const type = Object.keys(file)[0], content = file[Object.keys(file)[0]]
+    const [type] = Object.keys(file)
+    const content = file[Object.keys(file)[0]]
     return fileMap[type](content)
   }
   render() {
@@ -20,4 +22,8 @@ export class File extends Component {
       </div>
     )
   }
+}
+
+File.propTypes = {
+  file: PropTypes.object
 }

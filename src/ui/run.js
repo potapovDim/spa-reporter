@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import _ from 'lodash'
+import PropTypes from 'prop-types'
 import moment from 'moment'
 import {Suit} from './suit'
 import './style/style.scss'
@@ -27,4 +27,9 @@ export class Run extends Component {
       </div>
     )
   }
+}
+
+Run.propTypes = {
+  suits: PropTypes.array,
+  dirDate: PropTypes.string
 }

@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {
   showOnlyFailedRuns,
@@ -8,9 +9,7 @@ import {
 } from '../reducers/report'
 
 class Menu extends Component {
-  componentDidMount() {
-
-  }
+  // componentDidMount() {}
 
   hadnleFilter = ({target: {value}}) => {
     const {filterByBrowser} = this.props
@@ -18,7 +17,7 @@ class Menu extends Component {
   }
 
   render() {
-    const {failedTest, successTest, allRuns} = this.props
+    // const {failedTest, successTest, allRuns} = this.props
     return (
       <div>
         <select onChange={this.hadnleFilter}>
@@ -42,3 +41,10 @@ export function mapDispatchToProps(dispatch) {
 }
 
 export default connect(state => state, mapDispatchToProps)(Menu)
+
+Menu.propTypes = {
+  failedTest: PropTypes.func,
+  successTest: PropTypes.func,
+  allRuns: PropTypes.func,
+  filterByBrowser: PropTypes.func
+}

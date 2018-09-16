@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Run} from './run'
 
@@ -20,3 +21,7 @@ class Layout extends Component {
 }
 
 export default connect(state => state)(Layout)
+
+Layout.propTypes = {
+  runs: PropTypes.array
+}

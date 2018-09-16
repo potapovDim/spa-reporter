@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import {Step} from './step'
 import './style/test.scss'
 
@@ -17,19 +18,10 @@ export class Test extends Component {
     const {open, opts} = this.state
     const {title, /*start, end,*/ duration, state, testOptions, errorStack} = this.props
 
-    const getClass = () => {
-      switch(state) {
-        case 'failed': return 'failed'
-        case 'passed': return 'passed'
-        case 'pending': return 'pending'
-        case 'broken': return 'broken'
-      }
-      return ''
-    }
     return (
       <div>
 
-        <div onClick={this.openDetails} className={`test__title ${getClass()}`}> Test: {title}</div>
+        <div onClick={this.openDetails} className={`test__title ${state}`}> Test: {title}</div>
         {open &&
           <div className="flex__test">
             <div>
@@ -52,4 +44,12 @@ export class Test extends Component {
       </div >
     )
   }
+}
+
+Test.propTypes = {
+  title: PropTypes.string,
+  state: PropTypes.string,
+  duration: PropTypes.number,
+  errorStack: PropTypes.string,
+  testOptions: PropTypes.object
 }

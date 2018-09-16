@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import Chart from './chart_component'
 import {SuitRun} from './suit_run_component'
@@ -8,7 +9,7 @@ class DynamicController extends Component {
 
   state = {testsData: null, stats: null}
 
-  componentWillMount() {
+  componentDidMount() {
     componentTransfer.subscribe((data) => this.setState({testsData: data}))
   }
 
@@ -37,5 +38,9 @@ class DynamicController extends Component {
     )
   }
 }
-// generalStats: runs.map(run => ({...run.stats, runName: run.runName}))
+
 export default connect(({runs}) => ({runs}))(DynamicController)
+
+DynamicController.propTypes = {
+  runs: PropTypes.array
+}

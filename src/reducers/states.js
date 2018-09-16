@@ -1,9 +1,4 @@
-let scopeState
-let runsStates
-let failedTests
-let successTests
-
-const {pick, mapValues} = require('lodash')
+let scopeState = null
 
 try {
   scopeState = require('./base.json')

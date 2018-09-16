@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import {Test} from '../ui/test'
 
 export class SuitRun extends Component {
@@ -11,4 +12,8 @@ export class SuitRun extends Component {
   render() {
     return (<div>{this.renderContent()}</div>)
   }
+}
+
+SuitRun.propTypes = {
+  tests: PropTypes.array
 }

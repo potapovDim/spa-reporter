@@ -38,8 +38,6 @@
     "cssnano": "^3.10.0",
     "extract-text-webpack-plugin": "^2.1.2",
     "file-loader": "^0.11.1",
-    "fontgen-loader": "^0.2.1",
-    "has-flag": "^2.0.0",
     "html-webpack-plugin": "^2.30.1",
     "ignore-styles": "^5.0.1",
     "minimist": "^1.2.0",

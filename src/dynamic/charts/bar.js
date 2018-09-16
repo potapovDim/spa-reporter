@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import {Chart} from 'chart.js'
 import getRandomColor from '../../random_color'
 
@@ -31,9 +32,9 @@ export class BarChart extends Component {
 
   handleClick = (e) => {
     const {handleRunFocus} = this.props
-    const elementData = this.myChart.getElementAtEvent(e)[0]
-    const {_model: {label}} = elementData
-    const duration = this.myChart.data.datasets[elementData._datasetIndex].data[elementData._index]
+    const [elementData] = this.myChart.getElementAtEvent(e)
+    const {_model: {label}, _datasetIndex, _index} = elementData
+    const duration = this.myChart.data.datasets[_datasetIndex].data[_index]
     handleRunFocus({label, duration})
   }
 
@@ -42,4 +43,9 @@ export class BarChart extends Component {
       <div><canvas id="bar__chart_common" width="400" height="400" onClick={this.handleClick}></canvas></div>
     )
   }
+}
+
+BarChart.propTypes = {
+  handleRunFocus: PropTypes.func,
+  runs: PropTypes.array
 }

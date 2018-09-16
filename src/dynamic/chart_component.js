@@ -1,16 +1,16 @@
 import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import {BarChart} from './charts/bar'
 import {PieChart} from './charts/pie'
 import {componentTransfer} from '../ui-control/rx_ui_control'
 
 export default class MainChart extends Component {
-  state = {}
+
+  state = {line: null}
 
   handleRunFocus = ({label, duration}) => {
     const {runs} = this.props
-    const requiredRun = runs.find((item) => {
-      return (item.stats.duration === duration) && (item.runName === label)
-    })
+    const requiredRun = runs.find((item) => (item.stats.duration === duration) && (item.runName === label))
     this.setState({line: {label, requiredRun}})
   }
 
@@ -20,9 +20,11 @@ export default class MainChart extends Component {
       .find((item) => (item.runName === runName))
       .suits
       .reduce((testsAcc, suit) => {
-        testsAcc.push(...suit
-          .tests
-          .filter((testItem) => testItem.state === state));
+        testsAcc
+          .push(...suit
+            .tests
+            .filter((testItem) => testItem.state === state)
+          )
         return testsAcc
       }, [])
     componentTransfer.next({tests})
@@ -30,8 +32,9 @@ export default class MainChart extends Component {
 
   getContent = () => {
     const {line} = this.state
-    if(line) {return <PieChart {...line} handFocusPie={this.handFocusPie} />}
-    else {return <BarChart {...this.props} handleRunFocus={this.handleRunFocus} />}
+    return line
+      ? <PieChart {...line} handFocusPie={this.handFocusPie} />
+      : <BarChart {...this.props} handleRunFocus={this.handleRunFocus} />
   }
 
   render() {
@@ -39,4 +42,9 @@ export default class MainChart extends Component {
       <div>{this.getContent()}</div>
     )
   }
+}
+
+
+MainChart.propTypes = {
+  runs: PropTypes.array
 }
