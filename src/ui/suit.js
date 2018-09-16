@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import {componentTransfer} from '../ui-control/rx_ui_control'
 import './style/style.scss'
 
@@ -15,4 +16,10 @@ export class Suit extends Component {
       </div>
     )
   }
+}
+
+Suit.propTypes = {
+  title: PropTypes.string,
+  tests: PropTypes.array,
+  hooks: PropTypes.array
 }

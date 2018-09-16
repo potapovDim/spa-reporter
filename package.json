@@ -5,6 +5,7 @@
   "scripts": {
     "test": "mocha $(find ./specs/ -path '*.spec.*') --compilers js:babel-core/register --require ignore-styles --require ./specs/setup.js",
     "dev": "webpack-dev-server --open --inline",
+    "eslint": "eslint ./app ./test",
     "build": "webpack --progress"
   },
   "bin": {
@@ -47,6 +48,7 @@
     "normalize.css": "^7.0.0",
     "postcss-cssnext": "^2.11.0",
     "postcss-loader": "^2.0.5",
+    "prop-types": "^15.6.2",
     "react": "^16.5.1",
     "react-addons-test-utils": "^15.5.1",
     "react-dom": "^16.5.1",
@@ -65,10 +67,15 @@
     "webpack-svgstore-plugin": "^4.0.0"
   },
   "devDependencies": {
+    "babel-eslint": "^7.2.3",
+    "eslint": "^3.11.1",
+    "eslint-plugin-babel": "^4.1.2",
+    "eslint-plugin-react": "^7.3.0",
     "chai": "^4.0.2",
     "enzyme": "^3.6.0",
     "enzyme-adapter-react-16": "^1.5.0",
     "jsdom": "^11.0.0",
+    "jslint": "^0.12.0",
     "json-loader": "^0.5.7",
     "mocha": "^3.4.2"
   }

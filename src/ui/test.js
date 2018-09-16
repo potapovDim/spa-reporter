@@ -6,7 +6,7 @@ export class Test extends Component {
   state = {open: false, opts: false}
 
   renderSteps = () => {
-    const {steps} = this.props
+    const {steps = []} = this.props
     return steps.map((step, index) => <Step key={index} {...step} />)
   }
 
@@ -19,20 +19,26 @@ export class Test extends Component {
 
     const getClass = () => {
       switch(state) {
-        case 'failed': return 'failed';
-        case 'passed': return 'passed';
-        case 'pending': return 'pending';
-        case 'broken': return 'broken';
+        case 'failed': return 'failed'
+        case 'passed': return 'passed'
+        case 'pending': return 'pending'
+        case 'broken': return 'broken'
       }
+      return ''
     }
     return (
       <div>
 
-        <div onClick={this.openDetails} className={"test__title " + getClass()}> Test: {title}</div>
+        <div onClick={this.openDetails} className={`test__title ${getClass()}`}> Test: {title}</div>
         {open &&
           <div className="flex__test">
             <div>
-              {!!testOptions && <div onMouseEnter={this.showOpts} onMouseLeave={this.showOpts} className="">Show options</div>}
+              {
+                !!testOptions &&
+                <div onMouseEnter={this.showOpts} onMouseLeave={this.showOpts} className="">
+                  Show options
+              </div>
+              }
               {opts && <div>{JSON.stringify(testOptions, null, '\t')}</div>}
             </div>
             <div className="test__header_item">State: {state}</div>

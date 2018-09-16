@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import {File} from './file'
 import './style/step.scss'
 
@@ -16,9 +17,18 @@ export class Step extends Component {
     const {title, attachments = []} = this.props
     return (
       <div>
-        <div className={attachments.length ? 'step__with_attachments' : 'step__without_attachments'} onClick={this.openContent}>Step:{title}</div>
+        <div
+          className={attachments.length ? 'step__with_attachments' : 'step__without_attachments'}
+          onClick={this.openContent}>
+          Step: {title}
+        </div>
         {open && attachments.length && this.renderContent()}
       </div>
     )
   }
+}
+
+Step.propTypes = {
+  attachments: PropTypes.array,
+  title: PropTypes.string
 }
