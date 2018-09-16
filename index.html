@@ -16,4 +16,9 @@
   <script src="bundle.js"></script>
 </body>
 
+<script>
+  const worken = new Worker('workers/index.js')
+  worken.postMessage('!!!!!!!!!!')
+</script>
+
 </html>

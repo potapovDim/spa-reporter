@@ -69,7 +69,10 @@ module.exports = {
     ]
   },
   plugins: [
-    new CopyWebpackPlugin([{from: path.resolve(__dirname, './src/images'), to: path.resolve(__dirname, './dist/images')}]),
+    new CopyWebpackPlugin([
+      {from: path.resolve(__dirname, './src/images'), to: path.resolve(__dirname, './dist/images')},
+      {from: path.resolve(__dirname, './workeks'), to: path.resolve(__dirname, './dist/workers')}
+    ]),
     new ExtractTextPlugin({filename: 'style.css', allChunks: true}),
     new SvgStore({svgoOptions: {plugins: [{removeTitle: true}]}, prefix: 'icon'}),
     new ExtractTextPlugin({filename: '[name].css'}),
