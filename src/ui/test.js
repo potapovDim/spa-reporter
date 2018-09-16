@@ -15,7 +15,7 @@ export class Test extends Component {
 
   render() {
     const {open, opts} = this.state
-    const {title, /*start, end,*/ duration, state, testOptions} = this.props
+    const {title, /*start, end,*/ duration, state, testOptions, errorStack} = this.props
 
     const getClass = () => {
       switch(state) {
@@ -39,6 +39,7 @@ export class Test extends Component {
             <div className="test__header_item">Duration: {duration}</div>
             {/*<div className="test__header_item">End: {end} </div> */}
             <div>{this.renderSteps()}</div>
+            {errorStack && <div className="test_error__stack">{errorStack}</div>}
           </div>
         }
       </div >

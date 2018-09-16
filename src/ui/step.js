@@ -13,11 +13,11 @@ export class Step extends Component {
   }
   render() {
     const {open} = this.state
-    const {title, attachments} = this.props
+    const {title, attachments = []} = this.props
     return (
       <div>
         <div className={attachments.length ? 'step__with_attachments' : 'step__without_attachments'} onClick={this.openContent}>Step:{title}</div>
-        {open && this.renderContent()}
+        {open && attachments.length && this.renderContent()}
       </div>
     )
   }
