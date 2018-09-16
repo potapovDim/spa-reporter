@@ -6,6 +6,18 @@
   margin-left: 30px;
 }
 
+.test__title.failed {
+  color: rgba(255, 10, 0, 0.9);
+}
+
+.test__title.passed {
+  color: rgba(0, 255, 10, 0.9);
+}
+
+.test__title.pending {
+  color: rgba(255, 255, 0, 0.6);
+}
+
 .test_error__stack {
   max-width: 500px;
   color: rgba(255, 10, 0, 0.4);

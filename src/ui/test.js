@@ -21,13 +21,14 @@ export class Test extends Component {
       switch(state) {
         case 'failed': return 'failed';
         case 'passed': return 'passed';
+        case 'pending': return 'pending';
         case 'broken': return 'broken';
       }
     }
     return (
-      <div className={"suit__content " + getClass()}>
+      <div>
 
-        <div onClick={this.openDetails}> Test: {title}</div>
+        <div onClick={this.openDetails} className={"test__title " + getClass()}> Test: {title}</div>
         {open &&
           <div className="flex__test">
             <div>

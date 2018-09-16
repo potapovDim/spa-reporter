@@ -12,41 +12,40 @@ export const TopNav = () =>
 
           <div className="nav__item is-active">
             <div className="nav__label">
-              <span>ITEM</span>
+              <span>Display options</span>
               <i className="nav__icon"></i>
             </div>
 
-
             <div className="nav__subnav">
-              <a href="#item1" className="nav__item is-active">
+              {/* <a href="#item1" className="nav__item is-active">
                 <div className="nav__label">
                   <span>Icon Left</span>
                   <i className="nav__icon nav__icon--left"></i>
                 </div>
-              </a>
+              </a> */}
 
               <div className="nav__item">
                 <div className="nav__label">
-                  <span>Sub Item 2</span>
+                  <span>Test state</span>
                   <i className="nav__icon"></i>
                 </div>
 
                 <div className="nav__subnav">
                   <a href="#subsubitem1" className="nav__item">
                     <div className="nav__label">
-                      <span>SubSub Item 1</span>
+                      <span>Success</span>
                       <i className="nav__icon"></i>
                     </div>
                   </a>
                   <a href="#subsubitem1" className="nav__item">
                     <div className="nav__label">
-                      <span>SubSub Item 2</span>
+                      <span>Failed</span>
                       <i className="nav__icon"></i>
                     </div>
                   </a>
                   <a href="#subsubitem1" className="nav__item">
                     <div className="nav__label">
-                      <span>SubSub Item 3</span>
+                      <span>Pending</span>
                       <i className="nav__icon"></i>
                     </div>
                   </a>
@@ -64,14 +63,8 @@ export const TopNav = () =>
 
           </div>
 
-          <a href="#" className="nav__item">
-            <div className="nav__label">
-              <span>ITEM</span>
-              <i className="nav__icon"></i>
-            </div>
-          </a>
 
-          <div href="#" className="nav__item">
+          {/* <div href="#" className="nav__item">
             <div className="nav__label">
               <span>ITEM</span>
               <i className="nav__icon"></i>
@@ -124,6 +117,13 @@ export const TopNav = () =>
             </div>
 
           </div>
+          */}
+          <a href="#" className="nav__item">
+            <div className="nav__label">
+              <span>ITEM</span>
+              <i className="nav__icon"></i>
+            </div>
+          </a>
 
           <a href="#" className="nav__item">
             <div className="nav__label">
@@ -131,6 +131,7 @@ export const TopNav = () =>
               <i className="nav__icon"></i>
             </div>
           </a>
+
         </nav>
       </header>
     </section>

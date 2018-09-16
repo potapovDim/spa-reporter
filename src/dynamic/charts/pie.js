@@ -8,7 +8,7 @@ const getData = ({requiredRun: {stats}}) => {
   const colors = {
     failed: 'rgba(255, 0, 0, 0.6)',
     passed: 'rgba(0, 255, 0, 0.6)',
-    pending: 'rgba(0, 0, 255, 0.6)'
+    pending: 'rgba(255,255,0, 0.6)'
   }
   const dataAcc = {
     datasets: [{
