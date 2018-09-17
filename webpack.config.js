@@ -1,14 +1,14 @@
-const path = require('path');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const SvgStore = require('webpack-svgstore-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const SvgStore = require('webpack-svgstore-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = {
   entry: path.resolve('./src/index.js'),
   output: {
     path: path.resolve('./dist'),
-    filename: "bundle.js"
+    filename: 'bundle.js'
   },
   devServer: {
     port: 7070,
@@ -25,7 +25,7 @@ module.exports = {
         exclude: /node_modules/,
         loader: 'babel-loader',
         query: {
-          presets: ['react', 'es2015', 'stage-0'],
+          presets: ['react', 'es2015', 'stage-0']
         }
       }, {
         test: /\.scss$/,
