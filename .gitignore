@@ -9,3 +9,4 @@ src/images/*.*
 src/reducers/base.json
 dist
 rep
+test.json

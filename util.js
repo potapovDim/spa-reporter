@@ -1,5 +1,6 @@
 /* eslint-disable */
 const suits = require('./src/reducers/base.json')
+const fs = require('fs')
 
 function getEarliestStart(suits) {
   return suits.reduce((currentData, suit) => {
@@ -40,7 +41,7 @@ function getUniqSuits(suits) {
     }
   }
 
-  const uniqSuitsObj = nusuits.reduce((uniqSuits, suit) => {
+  const uniqSuitsObj = suits.reduce((uniqSuits, suit) => {
     const {runName} = suit
     if(!uniqSuits[runName]) {
       uniqSuits[runName] = suit
@@ -55,18 +56,10 @@ function getUniqSuits(suits) {
     return uniqSuits
   }, {})
   const uniqSuitsArr = Object.keys(uniqSuitsObj).reduce((accUniqArr, uniqSuitsArrKey) => {
-    accUniqArr.push(uniqSuitsArr[uniqSuitsArrKey]); return accUniqArr
+    accUniqArr.push(uniqSuitsObj[uniqSuitsArrKey]); return accUniqArr
   }, [])
+  fs.writeFileSync('./test.json', JSON.stringify(uniqSuitsArr))
+  return uniqSuitsArr
+
 }
-
-function mergeSuitsByRunName(suits) {
-
-
-  const start = getEarliestStart(suits)
-  const end = getLatestEnd(suits)
-
-  console.log(start, end)
-}
-
-mergeSuitsByRunName(suits)
-
+getUniqSuits(suits)
