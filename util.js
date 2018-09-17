@@ -21,9 +21,8 @@ function getLatestEnd(suits) {
   }, undefined)
 }
 
-
 function getUniqSuits(suits) {
-  const combineStats = ({start, end, ...rest1}, {start: start1, end: end1, ...rest2}) => {
+  const combineStatsRest = ({start, end, ...rest1}, {start: start1, end: end1, ...rest2}) => {
     const combinedStats = {}
     Object.keys(rest1).forEach((key) => {
       combinedStats[key] = rest1[key] + rest2[key]
@@ -41,11 +40,23 @@ function getUniqSuits(suits) {
     }
   }
 
-  const uniqSuitsArr = nusuits.reduce((uniqSuits, suit) => {
-
-    const {stats, runName} = suit
-
+  const uniqSuitsObj = nusuits.reduce((uniqSuits, suit) => {
+    const {runName} = suit
+    if(!uniqSuits[runName]) {
+      uniqSuits[runName] = suit
+    } else {
+      const exitSuit = uniqSuits[runName]
+      const combinedStatsRest = combineStatsRest(exitSuit.stats, suit.stats)
+      const startEndDate = getStartEndDate(exitSuit.stats, suit.stats)
+      const stats = {...combinedStatsRest, ...startEndDate}
+      exitSuit.suits.push(...suit.suits)
+      uniqSuits[runName] = {...exitSuit, stats, suits: exitSuit.suits}
+    }
+    return uniqSuits
   }, {})
+  const uniqSuitsArr = Object.keys(uniqSuitsObj).reduce((accUniqArr, uniqSuitsArrKey) => {
+    accUniqArr.push(uniqSuitsArr[uniqSuitsArrKey]); return accUniqArr
+  }, [])
 }
 
 function mergeSuitsByRunName(suits) {
