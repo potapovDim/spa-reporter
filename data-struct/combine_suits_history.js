@@ -1,6 +1,18 @@
 /* eslint-disable */
-const fs = require('fs')
 
+/**
+ * Sorting suits by first first test (it) start date time
+ *
+ * @param {Array} suits
+ * [{
+ * "title": "sring",
+   "status": boolean,
+   "hooks": Array[],
+   "tests": Array[],
+   "browser": "string"
+ * }]
+ * @returns {Array} suits what was reformated
+ */
 
 function sorSuits(suits) {
   const sortCb = (suitItemA, suitItemB) => {
@@ -12,28 +24,51 @@ function sorSuits(suits) {
   return suits.sort(sortCb)
 }
 
+
+/**
+ * Sorting suits by first first test (it) start date time
+ *
+ * @param {Array} runs
+ *  [{
+    "stats": "object",
+    "runName": "string",
+    "suits": Array<{
+         "title": "sring",
+         "status": boolean,
+         "hooks": Array[],
+         "tests": Array[],
+         "browser": "string"
+        }>,
+    "opts": "object",
+    "dirDate": "string"
+  },
+ * @returns {Array} suits what was reformated
+ */
 function getUniqMap(runs) {
 
-  const mapUniq = runs.map(({suits}) => {
-    const uniqMap = sorSuits(suits).reduce((uniqMap, suit) => {
-      console.log(Object.keys(suit))
+  const mapUniq = runs.map((run) => {
+    const {suits} = run
+    const uniqMap = sorSuits(suits).reduce((uniqMapAcc, suit) => {
+      // console.log(Object.keys(suit))
       const {title} = suit
-      if(uniqMap[title]) {uniqMap[title].push(suit)}
-      else {uniqMap[title] = []; uniqMap[title].push(suit)}
-      return uniqMap
-    }, {})
-    return uniqMap
-  })
 
-  fs.writeFileSync('./test1.json', JSON.stringify(mapUniq))
+      if(uniqMapAcc[title]) {uniqMapAcc[title].push(suit)}
+      else {uniqMapAcc[title] = []; uniqMapAcc[title].push(suit)}
+      return uniqMapAcc
+    }, {})
+
+    const suitsWithHistory = Object.keys(uniqMap).map((uniqMapKey) => {
+      const firstSuit = uniqMap[uniqMapKey][0]
+      const historyArr = uniqMap[uniqMapKey].splice(1, uniqMap[uniqMapKey].length)
+      firstSuit.history = historyArr
+      return firstSuit
+    })
+    return {...run, suits: suitsWithHistory}
+  })
+  // fs.writeFileSync('./test1.json', JSON.stringify(mapUniq))
   return mapUniq
 }
 
 module.exports = {
   getUniqMap
 }
-
-
-// function combineSuitsHistory(suits) {
-
-// }

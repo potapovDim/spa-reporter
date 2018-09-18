@@ -39,9 +39,11 @@ function getUniqSuits(suits) {
   const uniqSuitsArr = Object.keys(uniqSuitsObj).reduce((accUniqArr, uniqSuitsArrKey) => {
     accUniqArr.push(uniqSuitsObj[uniqSuitsArrKey]); return accUniqArr
   }, [])
-  fs.writeFileSync('./test.json', JSON.stringify(uniqSuitsArr))
   return uniqSuitsArr
 
 }
 
-getUniqMap(getUniqSuits(suits))
+const data = getUniqMap(getUniqSuits(suits))
+
+fs.writeFileSync('./test.json', JSON.stringify(data))
+// console.log(JSON.stringify())
