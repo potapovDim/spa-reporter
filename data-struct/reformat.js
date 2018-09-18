@@ -1,26 +1,6 @@
 /* eslint-disable */
-const suits = require('./src/reducers/base.json')
+const suits = require('../src/reducers/base.json')
 const fs = require('fs')
-
-function getEarliestStart(suits) {
-  return suits.reduce((currentData, suit) => {
-    const {stats: {start}} = suit
-    const dataMs = +new Date(start)
-    if(currentData === undefined) {currentData = dataMs}
-    if(currentData >= dataMs) {currentData = dataMs}
-    return currentData
-  }, undefined)
-}
-
-function getLatestEnd(suits) {
-  return suits.reduce((currentData, suit) => {
-    const {stats: {start}} = suit
-    const dataMs = +new Date(start)
-    if(currentData === undefined) {currentData = dataMs}
-    if(currentData <= dataMs) {currentData = dataMs}
-    return currentData
-  }, undefined)
-}
 
 function getUniqSuits(suits) {
   const combineStatsRest = ({start, end, ...rest1}, {start: start1, end: end1, ...rest2}) => {
@@ -62,4 +42,5 @@ function getUniqSuits(suits) {
   return uniqSuitsArr
 
 }
-getUniqSuits(suits)
+
+// getUniqSuits(suits)
