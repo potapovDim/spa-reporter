@@ -6,7 +6,7 @@ import './style/style.scss'
 export class Suit extends Component {
   state = {open: false}
 
-  openInfo = () => componentTransfer.next({tests: this.props.tests, hooks: this.props.hooks})
+  openInfo = () => componentTransfer.next({...this.props})
 
   render() {
     const {title} = this.props
