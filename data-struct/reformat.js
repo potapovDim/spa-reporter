@@ -1,6 +1,7 @@
 /* eslint-disable */
 const suits = require('../src/reducers/base.json')
 const fs = require('fs')
+const {getUniqMap} = require('./combine_suits_history')
 
 function getUniqSuits(suits) {
   const combineStatsRest = ({start, end, ...rest1}, {start: start1, end: end1, ...rest2}) => {
@@ -43,4 +44,4 @@ function getUniqSuits(suits) {
 
 }
 
-// getUniqSuits(suits)
+getUniqMap(getUniqSuits(suits))
