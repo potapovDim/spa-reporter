@@ -1,6 +1,4 @@
 /* eslint-disable */
-const suits = require('../src/reducers/base.json')
-const fs = require('fs')
 const {getUniqMap} = require('./combine_suits_history')
 
 function getUniqSuits(suits) {
@@ -43,7 +41,9 @@ function getUniqSuits(suits) {
 
 }
 
-const data = getUniqMap(getUniqSuits(suits))
+module.exports = {
+  getUniqMapWIthHistory: (suits) => getUniqMap(getUniqSuits(suits))
+}
 
-fs.writeFileSync('./test.json', JSON.stringify(data))
-// console.log(JSON.stringify())
+// fs.writeFileSync('./test.json', JSON.stringify(data))
+// // console.log(JSON.stringify())

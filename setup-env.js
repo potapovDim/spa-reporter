@@ -5,6 +5,7 @@ const copyDir = require('copy-dir')
 const path = require('path')
 const fs = require('fs')
 const reportDir = path.resolve(__dirname, './reporter')
+const {getUniqMapWIthHistory} = require('./data-struct/reformat')
 
 function executeCopyDir(reportPath) {
   copyDir.sync(path.resolve(process.cwd(), reportPath), reportDir)
@@ -115,7 +116,7 @@ function putBaseFile() {
   if(fs.existsSync(path.resolve(__dirname, './src/reducers/base.json'))) {
     fs.unlinkSync(path.resolve(__dirname, './src/reducers/base.json'))
   }
-  fs.writeFileSync(path.resolve(__dirname, './src/reducers/base.json'), JSON.stringify(data))
+  fs.writeFileSync(path.resolve(__dirname, './src/reducers/base.json'), JSON.stringify(getUniqMapWIthHistory(data)))
 }
 
 module.exports = {
