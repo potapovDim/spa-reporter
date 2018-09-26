@@ -15,9 +15,9 @@ describe('Step', () => {
   it('state', () => {
     const props = {attachments: [], title: 'test'}
     const wrapper = mount(<Step {...props} />)
-    expect(wrapper.state()).to.eql({showAttachments: false})
+    expect(wrapper.state()).to.eql({open: false})
     wrapper.find('div').at(1).simulate('click')
-    expect(wrapper.state()).to.eql({showAttachments: true})
+    expect(wrapper.state()).to.eql({open: true})
   })
   it('html', () => {
     const props = {attachments: [{img: 'test'}], title: 'test'}
