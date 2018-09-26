@@ -14,6 +14,16 @@
     "react",
     "babel"
   ],
+  "overrides": [
+    {
+      "files": [
+        "./src/*.js"
+      ],
+      "excludedFiles":[
+        "./specs/*.js"
+      ]
+    }
+  ],
   "parser": "babel-eslint",
   "rules": {
     "no-underscore-dangle": 0,

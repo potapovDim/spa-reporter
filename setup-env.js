@@ -116,7 +116,7 @@ function putBaseFile() {
   if(fs.existsSync(path.resolve(__dirname, './src/reducers/base.json'))) {
     fs.unlinkSync(path.resolve(__dirname, './src/reducers/base.json'))
   }
-  fs.writeFileSync(path.resolve(__dirname, './src/reducers/base.json'), JSON.stringify(getUniqMapWIthHistory(data)))
+  fs.writeFileSync(path.resolve(__dirname, './src/reducers/base.json'), JSON.stringify(/*getUniqMapWIthHistory( */ data /*)*/))
 }
 
 module.exports = {
